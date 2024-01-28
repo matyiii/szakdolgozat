@@ -1,4 +1,4 @@
-import { DummyRequests } from "./requests/DummyRequets";
+import { DummyRequests } from './requests/DummyRequets';
 
 export default {
 	dummy: DummyRequests

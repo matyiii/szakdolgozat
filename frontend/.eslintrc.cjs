@@ -11,8 +11,16 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint', 'prettier'],
 	rules: {
-		'no-console': 1, // Means warning
-		'prettier/prettier': 2, // Means error
-		'prettier/prettier': ['error', { singleQuote: true, endOfLine: 'crlf', useTabs: true, jsxSingleQuote: true }]
+		'prettier/prettier': 2,
+		'prettier/prettier': [
+			'error',
+			{
+				singleQuote: true,
+				endOfLine: 'crlf',
+				useTabs: true,
+				jsxSingleQuote: true,
+				trailingComma: 'none'
+			}
+		]
 	}
 };
