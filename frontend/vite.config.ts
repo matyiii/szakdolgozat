@@ -9,6 +9,11 @@ export default ({ mode }) => {
 	console.log(process.cwd());
 
 	return defineConfig({
-		plugins: [react()]
+		plugins: [react()],
+		resolve: {
+			alias: {
+				'@': path.resolve(__dirname, './src/')
+			}
+		}
 	});
 };
