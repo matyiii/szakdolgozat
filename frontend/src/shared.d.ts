@@ -6,3 +6,8 @@ export interface routeType {
 	roles?: string[];
 	type?: string;
 }
+
+type LoginPayload = {
+	email: FormDataEntryValue | any;
+	password: FormDataEntryValue | any;
+};
