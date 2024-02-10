@@ -1,4 +1,4 @@
-import { LoginPayload } from '@/shared';
+import { LoginPayload, RegisterPayload } from '@/shared';
 import Api from '../Api';
 
 export const AuthRequests = {
@@ -6,6 +6,15 @@ export const AuthRequests = {
 		return Api.post('/login', {
 			email: payload.email,
 			password: payload.password
+		});
+	},
+
+	register: (payload: RegisterPayload) => {
+		return Api.post('/register', {
+			name: payload.username,
+			email: payload.email,
+			password: payload.password,
+			password_confirmation: payload.password_confirmation
 		});
 	}
 };

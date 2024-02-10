@@ -19,7 +19,8 @@ module.exports = {
 				endOfLine: 'crlf',
 				useTabs: true,
 				jsxSingleQuote: true,
-				trailingComma: 'none'
+				trailingComma: 'none',
+				printWidth: 100
 			}
 		],
 		'@typescript-eslint/no-explicit-any': 'off',

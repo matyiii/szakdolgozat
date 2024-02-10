@@ -10,6 +10,7 @@ import Copyright from '@/components/Copyright/Copyright';
 import DataService from '@/service/DataService';
 
 const Login = () => {
+	/* Functions */
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -57,12 +58,7 @@ const Login = () => {
 					autoComplete='current-password'
 				/>
 
-				<Button
-					type='submit'
-					fullWidth
-					variant='contained'
-					sx={{ mt: 3, mb: 2 }}
-				>
+				<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
 					Sign In
 				</Button>
 				<Grid container>

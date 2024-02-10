@@ -11,3 +11,10 @@ type LoginPayload = {
 	email: FormDataEntryValue | any;
 	password: FormDataEntryValue | any;
 };
+
+type RegisterPayload = {
+	username: FormDataEntryValue | any;
+	email: FormDataEntryValue | any;
+	password: FormDataEntryValue | any;
+	password_confirmation: FormDataEntryValue | any;
+};

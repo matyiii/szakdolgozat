@@ -21,7 +21,7 @@ class AuthController extends Controller
 		if ($validator->fails()) {
 			return response()->json([
 				'validator_failed' => $validator->failed()
-			]);
+			], 422);
 		}
 
 		$validated = $validator->validated();
@@ -57,7 +57,7 @@ class AuthController extends Controller
 		if ($validator->fails()) {
 			return response()->json([
 				'validator_failed' => $validator->failed()
-			]);
+			], 422);
 		}
 
 		$validated = $validator->validated();
