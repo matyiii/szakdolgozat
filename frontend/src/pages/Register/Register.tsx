@@ -7,13 +7,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Alert, Snackbar } from '@mui/material';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import DataService from '@/service/DataService';
 import Copyright from '@/components/Copyright/Copyright';
+import { store } from '@/store/store';
+import { SET_USER } from '@/store/auth/authSlice';
 
 import './Register.scss';
 
 export default function SignUp() {
+	/* Hooks */
+	const navigate = useNavigate();
+
 	/* States */
 	const [isRegisterSuccesful, setIsRegisterSuccesful] = useState<boolean>(false);
 
@@ -45,8 +50,9 @@ export default function SignUp() {
 				DataService.auth
 					.login(loginPayload)
 					.then((res) => {
-						console.log(res);
-						/* TODO: store user in redux (set up redux) */
+						localStorage.setItem('user', JSON.stringify(res.data.user));
+						store.dispatch(SET_USER(res.data.user));
+						navigate('/');
 					})
 					.catch((err) => console.log(err));
 			})

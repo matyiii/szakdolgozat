@@ -4,11 +4,15 @@ import { OrbitControls } from '@react-three/drei';
 import { Model } from '@/components/Model/Model';
 
 import './Welcome.scss';
+import { useAppSelector } from '@/store/hooks';
+import { selectUser } from '@/store/auth/authSelector';
 
 const Welcome = () => {
+	const user = useAppSelector(selectUser);
+
 	return (
 		<div>
-			Welcome
+			{`Welcome - ${user.name}`}
 			<div className='content-div'>
 				<Canvas camera={{ position: [0, 10, 20] }}>
 					<Suspense fallback={null}>

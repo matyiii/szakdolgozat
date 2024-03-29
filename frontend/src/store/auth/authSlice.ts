@@ -2,22 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
 	id: number | null;
-	username: string | null;
+	name: string | null;
 	email: string | null;
-	token: any;
 }
 
 interface AuthState {
 	user: UserState;
 }
 
+const storedUserString = localStorage.getItem('user');
+const storedUser: UserState | null = storedUserString ? JSON.parse(storedUserString) : null;
+
 const initialState: AuthState = {
-	user: {
-		id: null,
-		username: null,
-		email: null,
-		token: null
-	}
+	user: storedUser || { id: null, name: null, email: null }
 };
 
 export const authSlice = createSlice({
@@ -25,9 +22,11 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		SET_USER: (state, action) => {
-			state.user = action.payload.user;
+			state.user = { ...action.payload };
 		}
 	}
 });
+
+export const { SET_USER } = authSlice.actions;
 
 export default authSlice.reducer;

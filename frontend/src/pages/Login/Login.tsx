@@ -8,8 +8,14 @@ import Container from '@mui/material/Container';
 
 import Copyright from '@/components/Copyright/Copyright';
 import DataService from '@/service/DataService';
+import { SET_USER } from '@/store/auth/authSlice';
+import { store } from '@/store/store';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+	/* Hooks */
+	const navigate = useNavigate();
+
 	/* Functions */
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -25,14 +31,15 @@ const Login = () => {
 		DataService.auth
 			.login(payload)
 			.then((res) => {
-				console.log(res);
-				/* TODO: store user in redux (set up redux) */
+				localStorage.setItem('user', JSON.stringify(res.data.user));
+				store.dispatch(SET_USER(res.data.user));
+				navigate('/');
 			})
 			.catch((err) => console.log(err));
 	};
 
 	return (
-		<Container component='main' maxWidth='xs'>
+		<Container component='div' maxWidth='xs'>
 			<Typography component='h1' variant='h5'>
 				Sign in
 			</Typography>
