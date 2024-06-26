@@ -1,74 +1,81 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { useState } from 'react';
-import { useAppSelector } from '@/store/hooks';
+import DataService from '@/service/DataService';
 import { selectUser } from '@/store/auth/authSelector';
+import { SET_USER } from '@/store/auth/authSlice';
+import { useAppSelector } from '@/store/hooks';
+import { store } from '@/store/store';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Navbar, Nav, Button } from 'rsuite';
 
 const Header = () => {
-	const user = useAppSelector(selectUser);
+    /*Hooks */
+    const navigate = useNavigate();
 
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    /* Selector */
+    const user = useAppSelector(selectUser);
 
-	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
+    /* Functions */
+    const handleLogout = () => {
+        DataService.auth
+            .logout()
+            .then((res) => {
+                console.log(res);
+                localStorage.removeItem('user');
+                store.dispatch(SET_USER(null));
+                navigate('/');
+            })
+            .catch((err) => console.log(err));
+    };
 
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	return (
-		<>
-			<AppBar position='static'>
-				<Toolbar>
-					<IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-						Photos
-					</Typography>
-					{user.id && (
-						<div>
-							<IconButton
-								size='large'
-								aria-label='account of current user'
-								aria-controls='menu-appbar'
-								aria-haspopup='true'
-								onClick={handleMenu}
-								color='inherit'
-							>
-								<AccountCircle />
-							</IconButton>
-							<Menu
-								id='menu-appbar'
-								anchorEl={anchorEl}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right'
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right'
-								}}
-								onClose={handleClose}
-								open={!!anchorEl}
-							>
-								<MenuItem onClick={handleClose}>Profile</MenuItem>
-								<MenuItem onClick={handleClose}>My account</MenuItem>
-							</Menu>
-						</div>
-					)}
-				</Toolbar>
-			</AppBar>
-		</>
-	);
+    return (
+        <>
+            {user.id ? (
+                <Navbar>
+                    <Navbar.Brand as='div'>
+                        <NavLink to='/'>PrintIT</NavLink>
+                    </Navbar.Brand>
+                    <Nav pullRight>
+                        <Nav>
+                            <Nav.Item as='div'>
+                                <NavLink to='/forum'>Forum</NavLink>
+                            </Nav.Item>
+                            <Nav.Item as='div'>
+                                <NavLink to='/upload'>
+                                    <Button appearance='primary'>Upload</Button>
+                                </NavLink>
+                            </Nav.Item>
+                        </Nav>
+                        <Nav.Menu title={user.name}>
+                            <Nav.Item as='div'>
+                                <NavLink to='/upload'>
+                                    <Button appearance='primary'>
+                                        Profile
+                                    </Button>
+                                </NavLink>
+                            </Nav.Item>
+                            <Nav.Item onClick={handleLogout}>Logout</Nav.Item>
+                        </Nav.Menu>
+                    </Nav>
+                </Navbar>
+            ) : (
+                <Navbar>
+                    <Navbar.Brand as='div'>
+                        <NavLink to='/'>PrintIT</NavLink>
+                    </Navbar.Brand>
+                    <Nav pullRight>
+                        <Nav.Item as='div'>
+                            <NavLink to='/discover'>Discover</NavLink>
+                        </Nav.Item>
+                        <Nav.Item as='div'>
+                            <NavLink to='/register'>Sign up</NavLink>
+                        </Nav.Item>
+                        <Nav.Item as='div'>
+                            <NavLink to='/login'>Sign in</NavLink>
+                        </Nav.Item>
+                    </Nav>
+                </Navbar>
+            )}
+        </>
+    );
 };
 
 export default Header;

@@ -1,138 +1,123 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { Alert, Snackbar } from '@mui/material';
-
 import { NavLink, useNavigate } from 'react-router-dom';
 import DataService from '@/service/DataService';
-import Copyright from '@/components/Copyright/Copyright';
 import { store } from '@/store/store';
 import { SET_USER } from '@/store/auth/authSlice';
+import { RegisterPayload } from '@/shared';
+import { Button, ButtonToolbar, Form, Panel } from 'rsuite';
+import toast from 'react-hot-toast';
+import ApiError from '@/components/ApiErrror/ApiError';
 
-import './Register.scss';
+const Register = () => {
+    /* Hooks */
+    const navigate = useNavigate();
 
-export default function SignUp() {
-	/* Hooks */
-	const navigate = useNavigate();
+    /* States */
+    const [payload, setPayload] = useState<RegisterPayload>({
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    });
 
-	/* States */
-	const [isRegisterSuccesful, setIsRegisterSuccesful] = useState<boolean>(false);
+    /* Functions */
+    const handleInputChange = (value: any, e: any) => {
+        const { name } = e.currentTarget;
+        setPayload((prevState: any) => {
+            return {
+                ...prevState,
+                [name]: value,
+            };
+        });
+    };
 
-	/* Functions */
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		const payload = {
-			username: data.get('username'),
-			email: data.get('email'),
-			password: data.get('password'),
-			password_confirmation: data.get('password_confirmation')
-		};
+    const handleSubmit = () => {
+        console.log(payload);
 
-		console.log(payload);
+        DataService.auth
+            .register(payload)
+            .then((res) => {
+                const loginPayload = {
+                    email: res.data.user.email,
+                    password: payload.password,
+                };
 
-		DataService.auth
-			.register(payload)
-			.then((res) => {
-				setIsRegisterSuccesful(true);
-				console.log(res);
+                toast.success('Register successfully!');
 
-				const loginPayload = {
-					email: res.data.user.email,
-					password: payload.password
-				};
+                // login user and redirect
+                DataService.auth
+                    .login(loginPayload)
+                    .then((res) => {
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify(res.data.user),
+                        );
+                        store.dispatch(SET_USER(res.data.user));
+                        navigate('/');
+                    })
+                    .catch((err) => console.log(err));
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.custom(<ApiError message={err.response.data} />, {
+                    duration: 5000,
+                });
+            });
+    };
 
-				// login user and redirect
-				DataService.auth
-					.login(loginPayload)
-					.then((res) => {
-						localStorage.setItem('user', JSON.stringify(res.data.user));
-						store.dispatch(SET_USER(res.data.user));
-						navigate('/');
-					})
-					.catch((err) => console.log(err));
-			})
-			.catch((err) => {
-				console.log(err);
-				setIsRegisterSuccesful(true);
-			});
-	};
+    return (
+        <Panel bordered className='flex justify-center'>
+            <h1 className='text-2xl font-medium px-2 pb-2'>Sign up</h1>
+            <Form className='p-2'>
+                <Form.Group controlId='username'>
+                    <Form.ControlLabel>Username</Form.ControlLabel>
+                    <Form.Control
+                        name='username'
+                        onChange={handleInputChange}
+                        value={payload.username}
+                    />
+                </Form.Group>
+                <Form.Group controlId='email'>
+                    <Form.ControlLabel>Email</Form.ControlLabel>
+                    <Form.Control
+                        name='email'
+                        onChange={handleInputChange}
+                        value={payload.email}
+                    />
+                </Form.Group>
+                <Form.Group controlId='password'>
+                    <Form.ControlLabel>Password</Form.ControlLabel>
+                    <Form.Control
+                        name='password'
+                        type='password'
+                        onChange={handleInputChange}
+                        value={payload.password}
+                    />
+                </Form.Group>
+                <Form.Group controlId='password_confirmation'>
+                    <Form.ControlLabel>Confirm Password</Form.ControlLabel>
+                    <Form.Control
+                        name='password_confirmation'
+                        type='password'
+                        onChange={handleInputChange}
+                        value={payload.password_confirmation}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <ButtonToolbar>
+                        <NavLink to='/login'>
+                            <Button appearance='link'>
+                                Already have an account? Sign in
+                            </Button>
+                        </NavLink>
+                        <Button appearance='primary' onClick={handleSubmit}>
+                            Sign up
+                        </Button>
+                    </ButtonToolbar>
+                </Form.Group>
+            </Form>
+        </Panel>
+    );
+};
 
-	return (
-		<Container component='main' maxWidth='xs'>
-			<Typography component='h1' variant='h5'>
-				Sign up
-			</Typography>
-			<Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-				<Grid container spacing={2}>
-					<Grid item xs={12} sm={12}>
-						<TextField
-							required
-							fullWidth
-							id='username'
-							label='Username'
-							name='username'
-							autoComplete='username'
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							required
-							fullWidth
-							id='email'
-							label='Email Address'
-							name='email'
-							autoComplete='email'
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							required
-							fullWidth
-							name='password'
-							label='Password'
-							type='password'
-							id='password'
-							autoComplete='new-password'
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							required
-							fullWidth
-							name='password_confirmation'
-							label='Confirm Password'
-							type='password'
-							id='password_confirmation'
-						/>
-					</Grid>
-				</Grid>
-				<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-					Sign Up
-				</Button>
-				<Grid container justifyContent='flex-end'>
-					<Grid item>
-						<NavLink to='/login' className='link'>
-							Already have an account? Sign in
-						</NavLink>
-					</Grid>
-				</Grid>
-			</Box>
-			<Copyright />
-
-			<Snackbar
-				open={isRegisterSuccesful}
-				autoHideDuration={5000}
-				onClose={() => setIsRegisterSuccesful(false)}
-			>
-				<Alert variant='outlined' severity='success'>
-					Registration successful!
-				</Alert>
-			</Snackbar>
-		</Container>
-	);
-}
+export default Register;

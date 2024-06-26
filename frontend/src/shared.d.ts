@@ -8,13 +8,13 @@ export interface routeType {
 }
 
 type LoginPayload = {
-	email: FormDataEntryValue | any;
-	password: FormDataEntryValue | any;
+	email: string;
+	password: string;
 };
 
 type RegisterPayload = {
-	username: FormDataEntryValue | any;
-	email: FormDataEntryValue | any;
-	password: FormDataEntryValue | any;
-	password_confirmation: FormDataEntryValue | any;
+	username: string;
+	email: string;
+	password: string;
+	password_confirmation: string;
 };

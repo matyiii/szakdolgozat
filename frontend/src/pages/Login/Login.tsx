@@ -1,89 +1,86 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
-import Copyright from '@/components/Copyright/Copyright';
+import ApiError from '@/components/ApiErrror/ApiError';
 import DataService from '@/service/DataService';
+import { LoginPayload } from '@/shared';
 import { SET_USER } from '@/store/auth/authSlice';
 import { store } from '@/store/store';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Button, ButtonToolbar, Form, Panel } from 'rsuite';
 
 const Login = () => {
-	/* Hooks */
-	const navigate = useNavigate();
+    /* Hooks */
+    const navigate = useNavigate();
 
-	/* Functions */
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+    /* State */
+    const [payload, setPayload] = useState<LoginPayload>({
+        email: '',
+        password: '',
+    });
 
-		const payload = {
-			email: data.get('email'),
-			password: data.get('password')
-		};
+    /* Functions */
+    const handleInputChange = (value: any, e: any) => {
+        const { name } = e.currentTarget;
+        setPayload((prevState: any) => {
+            return {
+                ...prevState,
+                [name]: value,
+            };
+        });
+    };
 
-		console.log(payload);
+    const handleSubmit = () => {
+        DataService.auth
+            .login(payload)
+            .then((res) => {
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                store.dispatch(SET_USER(res.data.user));
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.custom(<ApiError message={err.response.data} />, {
+                    duration: 5000,
+                });
+            });
+    };
 
-		DataService.auth
-			.login(payload)
-			.then((res) => {
-				localStorage.setItem('user', JSON.stringify(res.data.user));
-				store.dispatch(SET_USER(res.data.user));
-				navigate('/');
-			})
-			.catch((err) => console.log(err));
-	};
-
-	return (
-		<Container component='div' maxWidth='xs'>
-			<Typography component='h1' variant='h5'>
-				Sign in
-			</Typography>
-			<Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-				<TextField
-					margin='normal'
-					required
-					fullWidth
-					id='email'
-					label='Email Address'
-					name='email'
-					autoComplete='email'
-					autoFocus
-				/>
-				<TextField
-					margin='normal'
-					required
-					fullWidth
-					name='password'
-					label='Password'
-					type='password'
-					id='password'
-					autoComplete='current-password'
-				/>
-
-				<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-					Sign In
-				</Button>
-				<Grid container>
-					<Grid item xs>
-						<Link href='#' variant='body2'>
-							Forgot password?
-						</Link>
-					</Grid>
-					<Grid item>
-						<Link href='#' variant='body2'>
-							{"Don't have an account? Sign Up"}
-						</Link>
-					</Grid>
-				</Grid>
-			</Box>
-			<Copyright />
-		</Container>
-	);
+    return (
+        <Panel bordered className='flex justify-center'>
+            <h1 className='text-2xl font-medium px-2 pb-2'>Log in</h1>
+            <Form className='p-2'>
+                <Form.Group controlId='email'>
+                    <Form.ControlLabel>Email</Form.ControlLabel>
+                    <Form.Control
+                        name='email'
+                        onChange={handleInputChange}
+                        value={payload.email}
+                    />
+                </Form.Group>
+                <Form.Group controlId='password'>
+                    <Form.ControlLabel>Password</Form.ControlLabel>
+                    <Form.Control
+                        name='password'
+                        type='password'
+                        onChange={handleInputChange}
+                        value={payload.password}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <ButtonToolbar>
+                        <NavLink to='/register'>
+                            <Button appearance='link' className=''>
+                                Don't have an account? Sign Up
+                            </Button>
+                        </NavLink>
+                        <Button appearance='primary' onClick={handleSubmit}>
+                            Sign in
+                        </Button>
+                    </ButtonToolbar>
+                </Form.Group>
+            </Form>
+        </Panel>
+    );
 };
 
 export default Login;

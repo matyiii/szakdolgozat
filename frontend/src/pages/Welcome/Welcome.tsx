@@ -2,8 +2,6 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Model } from '@/components/Model/Model';
-
-import './Welcome.scss';
 import { useAppSelector } from '@/store/hooks';
 import { selectUser } from '@/store/auth/authSelector';
 

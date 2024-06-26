@@ -1,16 +1,18 @@
-import { Link, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 const Copyright = () => {
-	return (
-		<Typography variant='body2' color='text.secondary' align='center' sx={{ mt: 8, mb: 4 }}>
-			{'Copyright © '}
-			<Link color='inherit' href='/'>
-				Website
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
+    return (
+        <div className='my-3'>
+            <p className='text-gray-500 text-center'>
+                Copyright ©{' '}
+                <NavLink to='/' className='underline'>
+                    PrintIT
+                </NavLink>
+                &nbsp;
+                {new Date().getFullYear()}.
+            </p>
+        </div>
+    );
 };
 
 export default Copyright;
