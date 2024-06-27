@@ -14,4 +14,19 @@ class ThreeDModel extends Model
 		'is_banned',
 		'like_count',
 	];
+
+	public function category()
+	{
+		return $this->hasOne(Category::class, 'id', 'category_id');
+	}
+
+	public function files()
+	{
+		return $this->hasMany(ThreeDFile::class, 'id', 'three_d_model_id');
+	}
+
+	public function images()
+	{
+		return $this->hasMany(ThreeDImage::class, 'id', 'three_d_model_id');
+	}
 }
