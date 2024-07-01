@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 
 class DummyController extends Controller
 {
-    public function test()
+	public function test()
 	{
 		return response()->json([
-			'msg' =>'Hello from Backend',
-			'APP_NAME' => env('APP_NAME'),
+			'cors' => config('cors'),
+			'sanctum' => config('sanctum'),
+			'session' => config('session'),
+			'auth' => config('auth')
 		]);
 	}
 }

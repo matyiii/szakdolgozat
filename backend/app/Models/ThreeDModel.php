@@ -12,8 +12,16 @@ class ThreeDModel extends Model
 	protected $fillable = [
 		'name',
 		'is_banned',
+		'is_highlighted',
 		'like_count',
+		'user_id',
+		'category_id',
 	];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'user_id', 'id');
+	}
 
 	public function category()
 	{
@@ -22,11 +30,26 @@ class ThreeDModel extends Model
 
 	public function files()
 	{
-		return $this->hasMany(ThreeDFile::class, 'id', 'three_d_model_id');
+		return $this->hasMany(ThreeDFile::class, 'three_d_model_id', 'id');
 	}
 
 	public function images()
 	{
-		return $this->hasMany(ThreeDImage::class, 'id', 'three_d_model_id');
+		return $this->hasMany(ThreeDImage::class, 'three_d_model_id', 'id');
+	}
+
+	public static function getHighlightedModels()
+	{
+		return self::with(['category', 'images', 'files'])
+			->where('is_highlighted', 1)
+			->get();
+	}
+
+	public static function getMostLikedModels()
+	{
+		return self::with(['user', 'category', 'images', 'files'])
+			->orderBy('like_count','desc')
+			->take(10)
+			->get();
 	}
 }

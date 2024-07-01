@@ -13,5 +13,6 @@ class ThreeDImage extends Model
 		'name',
 		'path',
 		'extension',
+		'three_d_model_id',
 	];
 }

@@ -17,6 +17,7 @@ return new class extends Migration
 			$table->id();
 			$table->string('name');
 			$table->boolean('is_banned')->nullable();
+			$table->boolean('is_highlighted')->default(0);
 			$table->unsignedInteger('like_count')->default(0);
 			$table->foreignIdFor(User::class)->constrained();
 			$table->foreignIdFor(Category::class)->constrained();

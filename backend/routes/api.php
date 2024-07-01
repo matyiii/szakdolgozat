@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DummyController;
+use App\Http\Controllers\ThreeDController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('dummy')->group(function() {
-	Route::get('test', [DummyController::class, 'test']);
-});
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [AuthController::class, 'user']);
+	/* Auth */
+	Route::post('/logout', [AuthController::class, 'logout']);
+	Route::get('/user', [AuthController::class, 'user']);
+
+	/* ThreeD */
+
+	/* Discover */
+	Route::post('test', [DummyController::class, 'test']);
+});
+
+Route::prefix('3d')->group(function () {
+	Route::post('/upload', [ThreeDController::class, 'upload']);
+	Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
+});
+
+Route::prefix('discover')->group(function () {
+	Route::get('/most_liked_models', [ThreeDController::class, 'getMostLikedModels']);
 });
