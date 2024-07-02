@@ -34,8 +34,6 @@ class AuthController extends Controller
 
 		$token = $user->createToken('auth_token')->plainTextToken;
 
-		$cookie = cookie('token', $token, 60 * 24); // 1day
-
 		return response()->json([
 			'user' => [
 				'id' => $user->id,
@@ -43,8 +41,9 @@ class AuthController extends Controller
 				'email' => $user->email,
 				'created_at' => $user->created_at,
 				'updated_at' => $user->updated_at,
+				'token' => $token,
 			]
-		])->withCookie($cookie);
+		]);
 	}
 
 	public function login(Request $request)
@@ -72,8 +71,6 @@ class AuthController extends Controller
 
 		$token = $user->createToken('auth_token')->plainTextToken;
 
-		$cookie = cookie('token', $token, 60 * 24);
-
 		return response()->json([
 			'user' => [
 				'id' => $user->id,
@@ -81,18 +78,21 @@ class AuthController extends Controller
 				'email' => $user->email,
 				'created_at' => $user->created_at,
 				'updated_at' => $user->updated_at,
+				'token' => $token,
 			]
-		])->withCookie($cookie);
+		]);
 	}
 
 	public function logout(Request $request)
 	{
 		$request->user()->currentAccessToken()->delete();
 
-		$cookie = cookie()->forget('token');
-
 		return response()->json([
-			'message' => 'Logged out successfully!'
-		])->withCookie($cookie);
+			'message' => 'Logged out successfully!',
+			'cors' => config('cors'),
+			'sanctum' => config('sanctum'),
+			'session' => config('session'),
+			'auth' => config('auth')
+		]);
 	}
 }
