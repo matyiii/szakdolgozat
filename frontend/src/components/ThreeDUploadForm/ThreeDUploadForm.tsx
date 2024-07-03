@@ -1,24 +1,37 @@
 import DataService from '@/service/DataService';
+import { CategoryType } from '@/shared';
+import { useAppSelector } from '@/store/hooks';
+import { selectCategories } from '@/store/site/siteSelector';
 import { useState } from 'react';
-import { Button, ButtonToolbar, Form, Uploader } from 'rsuite';
+import toast from 'react-hot-toast';
+import { Button, ButtonToolbar, Form, SelectPicker, Uploader } from 'rsuite';
 import { FileType } from 'rsuite/esm/Uploader';
+import ApiError from '../ApiErrror/ApiError';
 
 type ThreeDUploadFormType = {
-	name: string;
+	model_name: string;
+	category_id: number | null;
 	files: FileType[];
 };
 
 const ThreeDUploadForm = () => {
+	/* Selectors */
+	const categories = useAppSelector(selectCategories);
+
 	/* States */
-	const [form, setForm] = useState<ThreeDUploadFormType>({ name: 'teszt', files: [] });
+	const [form, setForm] = useState<ThreeDUploadFormType>({
+		model_name: '',
+		category_id: null,
+		files: [],
+	});
 
 	/* Functions */
 	const handleFormChange = (value: any, e: any) => {
 		const { name } = e.currentTarget;
-		setForm((prevState: any) => {
+		setForm((prevState: ThreeDUploadFormType) => {
 			return {
 				...prevState,
-				[name]: value
+				[name]: value,
 			};
 		});
 	};
@@ -27,7 +40,7 @@ const ThreeDUploadForm = () => {
 		setForm((prevState: any) => {
 			return {
 				...prevState,
-				files: newFiles
+				files: newFiles,
 			};
 		});
 	};
@@ -41,6 +54,9 @@ const ThreeDUploadForm = () => {
 			})
 			.catch((err) => {
 				console.log(err);
+				toast.custom(<ApiError message={err.response.data} />, {
+					duration: 5000,
+				});
 			});
 	};
 
@@ -49,7 +65,32 @@ const ThreeDUploadForm = () => {
 			<Form>
 				<Form.Group controlId='model_name'>
 					<Form.ControlLabel>Model Name</Form.ControlLabel>
-					<Form.Control name='model_name' onChange={handleFormChange} value={form.name} />
+					<Form.Control
+						name='model_name'
+						onChange={handleFormChange}
+						value={form.model_name}
+					/>
+				</Form.Group>
+				<Form.Group controlId='category'>
+					<Form.ControlLabel>Category</Form.ControlLabel>
+					<SelectPicker
+						placeholder='Select category'
+						searchable={false}
+						data={(categories as CategoryType[]).map(
+							(category) => ({
+								label: category.name,
+								value: category.id,
+							}),
+						)}
+						onSelect={(_, item) => {
+							setForm((prevState: ThreeDUploadFormType) => {
+								return {
+									...prevState,
+									category_id: item.value as number,
+								};
+							});
+						}}
+					/>
 				</Form.Group>
 				<Uploader
 					draggable

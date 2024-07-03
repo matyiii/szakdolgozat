@@ -18,3 +18,17 @@ type RegisterPayload = {
 	password: string;
 	password_confirmation: string;
 };
+
+type User = {
+	id: number | null;
+	name: string | null;
+	email: string | null;
+	token: string | null;
+};
+
+type CategoryType = {
+	id?: number;
+	name: string;
+	updated_at?: string;
+	created_at?: string;
+};

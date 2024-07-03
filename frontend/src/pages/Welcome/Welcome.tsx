@@ -1,18 +1,20 @@
-import { useAppSelector } from '@/store/hooks';
-import { selectUser } from '@/store/auth/authSelector';
 import STLViewer from '@/components/STLViewer/STLViewer';
 import DataService from '@/service/DataService';
 import { Button } from 'rsuite';
+import useUser from '@/hooks/useUser';
 
 const Welcome = () => {
-	const user = useAppSelector(selectUser);
+	const { user } = useUser();
 
 	return (
 		<div>
 			{`Welcome - ${user.name}`}
 			<div className='content-div'>
 				{/*<img src='http://localhost:8000/images/example.jpg' />*/}
-				<img src='http://localhost:8000/storage/uploads/images/cpu.jpg' className='max-w-60' />
+				<img
+					src='http://localhost:8000/storage/uploads/images/cpu.jpg'
+					className='max-w-60'
+				/>
 				{/*<STLViewer />*/}
 				<Button
 					onClick={() => {

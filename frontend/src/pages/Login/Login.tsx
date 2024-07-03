@@ -2,6 +2,7 @@ import ApiError from '@/components/ApiErrror/ApiError';
 import DataService from '@/service/DataService';
 import { LoginPayload } from '@/shared';
 import { SET_USER } from '@/store/auth/authSlice';
+import { fetchCategories } from '@/store/site/siteSlice';
 import { store } from '@/store/store';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -35,6 +36,7 @@ const Login = () => {
 			.then((res) => {
 				localStorage.setItem('user', JSON.stringify(res.data.user));
 				store.dispatch(SET_USER(res.data.user));
+				store.dispatch(fetchCategories());
 				navigate('/');
 			})
 			.catch((err) => {
