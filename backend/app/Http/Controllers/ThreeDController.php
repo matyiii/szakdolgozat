@@ -13,7 +13,7 @@ class ThreeDController extends Controller
 	public function upload(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-			'name' => 'required|string',
+			'model_name' => 'required|string',
 			'category_id' => 'required|numeric', //exists
 			'is_highlighted' => 'sometimes|boolean',
 			'files' => 'required|array',
