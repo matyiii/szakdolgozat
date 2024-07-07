@@ -12,7 +12,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<main className='flex items-center justify-center flex-grow h-full'>
+			<main className='flex flex-col items-center justify-center flex-grow w-full min-h-screen'>
 				<Router />
 				{isLoading && (
 					<Loader

@@ -1,8 +1,10 @@
+import Preview from '@/components/ThreeDModel/Preview/Preview';
 import DataService from '@/service/DataService';
+import { ThreeDModelType } from '@/shared';
 import { useEffect, useState } from 'react';
 
 const Discover = () => {
-	const [models, setModels] = useState<any[]>();
+	const [models, setModels] = useState<ThreeDModelType[]>();
 
 	useEffect(() => {
 		DataService.threeD
@@ -17,19 +19,11 @@ const Discover = () => {
 	}, []);
 
 	return (
-		<div>
-			<h1>Discover</h1>
-			<div>
+		<div className='p-4'>
+			<h1 className='text-2xl font-bold text-center mb-4'>Discover Prints</h1>
+			<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 				{models?.map((model) => {
-					return (
-						<div key={model.id}>
-							<h2>{model.name}</h2>
-							<img
-								src={`http://localhost:8000/storage/${model.images[0]?.path}`}
-								className='max-w-60'
-							/>
-						</div>
-					);
+					return <Preview key={model.id} model={model} />;
 				})}
 			</div>
 		</div>
