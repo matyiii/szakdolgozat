@@ -17,7 +17,9 @@ class ThreeDController extends Controller
 			'category_id' => 'required|numeric', //exists
 			'is_highlighted' => 'sometimes|boolean',
 			'files' => 'required|array',
-			'files.*' => 'file', //mimes:stl,jpeg,jpg,png,...
+			'files.*.blobFile' => 'required|file',
+			'files.*.name' => 'required|string',
+			'files.*.status' => 'required|string|in:inited,processing,completed,failed',
 		]);
 
 		if ($validator->fails()) {
@@ -26,23 +28,24 @@ class ThreeDController extends Controller
 			], 422);
 		}
 
-		$validated = $validator->validate();
+		$validated = $validator->validated();
+
 		$threeDModel = ThreeDModel::create([
-			'name' => $validated['name'],
+			'name' => $validated['model_name'],
 			'is_banned' => false,
-			'is_highlighted' => $validated['is_highlighted'],
+			'is_highlighted' => $validated['is_highlighted'] ?? false,
 			'like_count' => 0,
-			'user_id' => 1,
+			'user_id' => $request->user()->id,
 			'category_id' => $validated['category_id'],
 		]);
 
-		// Process and store files
 		foreach ($request->file('files') as $file) {
-			$extension = $file->getClientOriginalExtension();
-			$filename = $file->getClientOriginalName();
+			$blobFile = $file['blobFile'];
+			$extension = $blobFile->getClientOriginalExtension();
+			$filename = $blobFile->getClientOriginalName();
 
-			if (in_array($extension, ['gcode', 'stl'])) {
-				$path = $file->storeAs('uploads/models', $filename);
+			if (in_array($extension, ['stl'])) {
+				$path = $blobFile->storeAs('uploads/models', $filename, 'public');
 
 				ThreeDFile::create([
 					'three_d_model_id' => $threeDModel->id,
@@ -50,8 +53,8 @@ class ThreeDController extends Controller
 					'path' => $path,
 					'extension' => $extension,
 				]);
-			} elseif (in_array($extension, ['jpeg', 'jpg', 'png'])) {
-				$path = $file->storeAs('uploads/images', $filename, 'public');
+			} elseif (in_array($extension, ['jpeg', 'jpg', 'png', 'PNG'])) {
+				$path = $blobFile->storeAs('uploads/images', $filename, 'public');
 
 				ThreeDImage::create([
 					'three_d_model_id' => $threeDModel->id,
