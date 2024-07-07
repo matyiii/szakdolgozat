@@ -19,7 +19,7 @@ module.exports = {
 				endOfLine: 'crlf',
 				useTabs: true,
 				jsxSingleQuote: true,
-				trailingComma: 'none',
+				trailingComma: 'all',
 				printWidth: 100
 			}
 		],
