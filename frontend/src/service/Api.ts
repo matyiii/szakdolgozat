@@ -5,9 +5,8 @@ import ApiResponseInterceptor from './interceptors/ApiResponseInterceptor';
 import ApiResponseError from './interceptors/ApiResponseError';
 
 const Api = axios.create({
-    baseURL:
-        import.meta.env.MODE === 'prod' ? '/api' : import.meta.env.VITE_API,
-    withCredentials: true,
+	baseURL: import.meta.env.MODE === 'prod' ? '/api' : import.meta.env.VITE_API,
+	withCredentials: true,
 });
 
 Api.interceptors.request.use(ApiRequestInterceptor, ApiRequestError);

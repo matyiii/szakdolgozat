@@ -47,8 +47,23 @@ const ThreeDUploadForm = () => {
 
 	const handleSubmit = () => {
 		console.log(form);
+
+		const formData = new FormData();
+		formData.append('model_name', form.model_name);
+		formData.append('category_id', `${form.category_id}`);
+
+		form.files.forEach((file, index) => {
+			if (file.blobFile && file.name && file.status && file.fileKey) {
+				formData.append(`files[${index}][blobFile]`, file.blobFile);
+				formData.append(`files[${index}][name]`, file.name);
+				formData.append(`files[${index}][status]`, file.status);
+			} else {
+				console.error(`File blobFile at index ${index} is undefined.`);
+			}
+		});
+
 		DataService.threeD
-			.upload(form)
+			.upload(formData)
 			.then((res) => {
 				console.log(res);
 			})
@@ -65,23 +80,17 @@ const ThreeDUploadForm = () => {
 			<Form>
 				<Form.Group controlId='model_name'>
 					<Form.ControlLabel>Model Name</Form.ControlLabel>
-					<Form.Control
-						name='model_name'
-						onChange={handleFormChange}
-						value={form.model_name}
-					/>
+					<Form.Control name='model_name' onChange={handleFormChange} value={form.model_name} />
 				</Form.Group>
 				<Form.Group controlId='category'>
 					<Form.ControlLabel>Category</Form.ControlLabel>
 					<SelectPicker
 						placeholder='Select category'
 						searchable={false}
-						data={(categories as CategoryType[]).map(
-							(category) => ({
-								label: category.name,
-								value: category.id,
-							}),
-						)}
+						data={(categories as CategoryType[]).map((category) => ({
+							label: category.name,
+							value: category.id,
+						}))}
 						onSelect={(_, item) => {
 							setForm((prevState: ThreeDUploadFormType) => {
 								return {

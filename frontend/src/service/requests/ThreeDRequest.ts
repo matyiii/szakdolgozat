@@ -7,5 +7,5 @@ export const ThreeDRequest = {
 
 	getMostLikedModels: () => {
 		return Api.get('/discover/most_liked_models');
-	}
+	},
 };
