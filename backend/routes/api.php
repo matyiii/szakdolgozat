@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::prefix('3d')->group(function () {
 		Route::post('/upload', [ThreeDController::class, 'upload']);
 		Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
+		Route::get('/getModel', [ThreeDController::class, 'getModelById']);
 	});
 
 	/* Discover */

@@ -82,4 +82,26 @@ class ThreeDController extends Controller
 
 		return response()->json($mostLikedModels);
 	}
+
+	public function getModelById(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'id' => 'required|exists:App\Models\ThreeDModel,id',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$id = $validated['id'];
+
+		$model = ThreeDModel::getById($id);
+
+		return response()->json([
+			'model' => $model
+		]);
+	}
 }

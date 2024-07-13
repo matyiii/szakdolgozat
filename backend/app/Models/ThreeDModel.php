@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ThreeDModel extends Model
+class ThreeDModel extends BaseModel
 {
 	protected $connection = 'mysql';
 	protected $table = 'three_d_models';
@@ -48,8 +46,14 @@ class ThreeDModel extends Model
 	public static function getMostLikedModels()
 	{
 		return self::with(['user', 'category', 'images', 'files'])
-			->orderBy('like_count','desc')
+			->orderBy('like_count', 'desc')
 			->take(10)
 			->get();
+	}
+
+	public static function getById($id)
+	{
+		return self::with(['user', 'category', 'images', 'files'])
+			->find($id);
 	}
 }
