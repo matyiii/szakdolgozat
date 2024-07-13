@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ThreeDFile extends Model
+class ThreeDFile extends BaseModel
 {
 	protected $connection = 'mysql';
 	protected $table = 'three_d_files';

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ThreeDImage extends Model
+class ThreeDImage extends BaseModel
 {
 	protected $connection = 'mysql';
 	protected $table = 'three_d_images';
