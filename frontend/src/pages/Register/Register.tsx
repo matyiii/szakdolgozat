@@ -17,7 +17,7 @@ const Register = () => {
 		username: '',
 		email: '',
 		password: '',
-		password_confirmation: ''
+		password_confirmation: '',
 	});
 
 	/* Functions */
@@ -26,7 +26,7 @@ const Register = () => {
 		setPayload((prevState: any) => {
 			return {
 				...prevState,
-				[name]: value
+				[name]: value,
 			};
 		});
 	};
@@ -39,7 +39,7 @@ const Register = () => {
 			.then((res) => {
 				const loginPayload = {
 					email: res.data.user.email,
-					password: payload.password
+					password: payload.password,
 				};
 
 				toast.success('Register successfully!');
@@ -57,7 +57,7 @@ const Register = () => {
 			.catch((err) => {
 				console.log(err);
 				toast.custom(<ApiError message={err.response.data} />, {
-					duration: 5000
+					duration: 5000,
 				});
 			});
 	};

@@ -16,7 +16,7 @@ const Login = () => {
 	/* State */
 	const [payload, setPayload] = useState<LoginPayload>({
 		email: 'admin@admin.com',
-		password: 'admin123'
+		password: 'admin123',
 	});
 
 	/* Functions */
@@ -25,7 +25,7 @@ const Login = () => {
 		setPayload((prevState: any) => {
 			return {
 				...prevState,
-				[name]: value
+				[name]: value,
 			};
 		});
 	};
@@ -42,7 +42,7 @@ const Login = () => {
 			.catch((err) => {
 				console.log(err);
 				toast.custom(<ApiError message={err.response.data} />, {
-					duration: 5000
+					duration: 5000,
 				});
 			});
 	};

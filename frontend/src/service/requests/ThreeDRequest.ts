@@ -8,4 +8,8 @@ export const ThreeDRequest = {
 	getMostLikedModels: () => {
 		return Api.get('/discover/most_liked_models');
 	},
+
+	getModelById: (id: any) => {
+		return Api.get(`/3d/getModel?id=${id}`);
+	},
 };
