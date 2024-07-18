@@ -3,8 +3,14 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import * as THREE from 'three';
 
-const STLModel = ({ url }: { url: string }) => {
-	const geometry = useLoader(STLLoader, url);
+type Props = {
+	path: string;
+};
+
+const STLModel = ({ path }: Props) => {
+	const geometry = useLoader(STLLoader, path, (loader) => {
+		loader.setCrossOrigin('anonymous'); // This handles CORS
+	});
 	const meshRef = useRef<THREE.Mesh>(null);
 	const { camera } = useThree();
 
