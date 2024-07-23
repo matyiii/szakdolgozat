@@ -18,7 +18,7 @@ const Model = () => {
 		DataService.threeD
 			.getModelById(modelId)
 			.then((res) => {
-				console.log(res);
+				console.log(res.data.model);
 				setModel(res.data.model);
 			})
 			.catch((err) => {
@@ -29,17 +29,14 @@ const Model = () => {
 			});
 	}, []);
 
-	console.log(model);
-	console.log(model?.files[0]?.path);
 	return (
-		<div className='flex flex-col container rounded-lg bg-green-200 w-screen h-full'>
+		<div className='container flex flex-col w-screen h-full bg-green-200 rounded-lg'>
 			{model && (
-				<div className=' bg-red-200 m-2'>
+				<div className='m-2 bg-red-200 '>
 					<div>{model?.name}</div>
 					<div className='bg-yellow-200'>
 						<div>
-							<STLViewer path={model?.files[0]?.path} />
-							<STLViewer2 url={`http://localhost:8000/storage/${model?.files[0].path}`} />
+							<STLViewer fileId={model?.files[0].id} />
 						</div>
 						<div>
 							<img src={`http://localhost:8000/storage/${model?.images[0].path}`} />
