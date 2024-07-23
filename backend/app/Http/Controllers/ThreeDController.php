@@ -6,6 +6,7 @@ use App\Models\ThreeDFile;
 use App\Models\ThreeDImage;
 use App\Models\ThreeDModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class ThreeDController extends Controller
@@ -103,5 +104,12 @@ class ThreeDController extends Controller
 		return response()->json([
 			'model' => $model
 		]);
+	}
+
+	public function loadFile(Request $request) {
+		$fileId = $request->id;
+		$threeDFile = ThreeDFile::find($fileId);
+		
+		return Response::file(storage_path('app/public/' . $threeDFile->path));
 	}
 }
