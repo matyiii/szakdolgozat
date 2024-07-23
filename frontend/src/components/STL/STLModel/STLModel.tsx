@@ -4,13 +4,12 @@ import { STLLoader } from 'three/examples/jsm/Addons.js';
 import * as THREE from 'three';
 
 type Props = {
-	path: string;
+	fileId: number;
 };
 
-const STLModel = ({ path }: Props) => {
-	const geometry = useLoader(STLLoader, path, (loader) => {
-		loader.setCrossOrigin('anonymous'); // This handles CORS
-	});
+const STLModel = ({ fileId }: Props) => {
+	const path = `${import.meta.env.VITE_FILES_API}${fileId}`;
+	const geometry = useLoader(STLLoader, path);
 	const meshRef = useRef<THREE.Mesh>(null);
 	const { camera } = useThree();
 

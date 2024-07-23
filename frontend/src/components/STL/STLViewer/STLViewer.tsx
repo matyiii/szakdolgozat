@@ -5,10 +5,10 @@ import STLModel from '@/components/STL/STLModel/STLModel';
 import * as THREE from 'three';
 
 type Props = {
-	path: string;
+	fileId: number;
 };
 
-const STLViewer = ({ path }: Props) => {
+const STLViewer = ({ fileId }: Props) => {
 	return (
 		<Canvas
 			camera={{ position: [0, 0, 5], fov: 75 }}
@@ -20,7 +20,7 @@ const STLViewer = ({ path }: Props) => {
 			<ambientLight intensity={0.5} />
 			<directionalLight position={[1, 1, 1]} intensity={1} />
 			<Suspense fallback={null}>
-				<STLModel path={`http://localhost:8000/storage/${path}`} />
+				<STLModel fileId={fileId} />
 			</Suspense>
 			<OrbitControls />
 		</Canvas>
