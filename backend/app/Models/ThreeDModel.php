@@ -16,6 +16,7 @@ class ThreeDModel extends BaseModel
 		'category_id',
 	];
 
+	/* Relations */
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'user_id', 'id');
@@ -36,6 +37,12 @@ class ThreeDModel extends BaseModel
 		return $this->hasMany(ThreeDImage::class, 'three_d_model_id', 'id');
 	}
 
+	public function likedByUseres()
+	{
+		return $this->belongsToMany(User::class, 'model_user_likes')->withTimestamps();
+	}
+
+	/* Methods */
 	public static function getHighlightedModels()
 	{
 		return self::with(['category', 'images', 'files'])
