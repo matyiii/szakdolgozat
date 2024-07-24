@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import DataService from '@/service/DataService';
 import { store } from '@/store/store';
 import { SET_USER } from '@/store/auth/authSlice';
-import { RegisterPayload } from '@/shared';
 import { Button, ButtonToolbar, Form, Panel } from 'rsuite';
 import toast from 'react-hot-toast';
 import ApiError from '@/components/ApiErrror/ApiError';

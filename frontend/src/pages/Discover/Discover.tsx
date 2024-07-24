@@ -1,6 +1,5 @@
 import Preview from '@/components/ThreeDModel/Preview/Preview';
 import DataService from '@/service/DataService';
-import { ThreeDModelType } from '@/shared';
 import { useEffect, useState } from 'react';
 
 const Discover = () => {

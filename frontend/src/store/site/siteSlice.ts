@@ -1,5 +1,4 @@
 import DataService from '@/service/DataService';
-import { CategoryType } from '@/shared';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 

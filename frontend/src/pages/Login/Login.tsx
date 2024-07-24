@@ -1,6 +1,5 @@
 import ApiError from '@/components/ApiErrror/ApiError';
 import DataService from '@/service/DataService';
-import { LoginPayload } from '@/shared';
 import { SET_USER } from '@/store/auth/authSlice';
 import { fetchCategories } from '@/store/site/siteSlice';
 import { store } from '@/store/store';

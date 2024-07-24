@@ -1,5 +1,4 @@
 import DataService from '@/service/DataService';
-import { CategoryType } from '@/shared';
 import { useAppSelector } from '@/store/hooks';
 import { selectCategories } from '@/store/site/siteSelector';
 import { useState } from 'react';

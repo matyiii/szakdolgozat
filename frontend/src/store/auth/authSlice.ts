@@ -1,4 +1,3 @@
-import { User } from '@/shared';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {

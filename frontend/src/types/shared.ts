@@ -1,22 +1,10 @@
-export interface routeType {
+type RouteType = {
 	path: string;
 	exact?: boolean;
 	component: React.FC | any;
 	isPrivate: boolean;
 	roles?: string[];
 	type?: string;
-}
-
-type LoginPayload = {
-	email: string;
-	password: string;
-};
-
-type RegisterPayload = {
-	username: string;
-	email: string;
-	password: string;
-	password_confirmation: string;
 };
 
 type User = {
@@ -67,4 +55,5 @@ type ThreeDModelType = {
 	category: CategoryType;
 	images: ImageType[];
 	files: FileType[];
+	is_liked?: boolean;
 };

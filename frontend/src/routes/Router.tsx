@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { routeType } from '@/shared';
 import { routes } from './routes';
 
 const Router = () => {
