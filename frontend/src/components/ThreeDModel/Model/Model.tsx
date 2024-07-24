@@ -1,34 +1,15 @@
 import ApiError from '@/components/ApiErrror/ApiError';
 import STLViewer from '@/components/STL/STLViewer/STLViewer';
-import STLViewer2 from '@/components/STL/STLViewer/STLViewer2';
 import DataService from '@/service/DataService';
-import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
 import { Button } from 'rsuite';
 
-const Model = () => {
-	const { modelId } = useParams();
+type Props = {
+	model: ThreeDModelType;
+	updateModel: any;
+};
 
-	/* States */
-	const [model, setModel] = useState<ThreeDModelType>();
-
-	/* Effects */
-	useEffect(() => {
-		DataService.threeD
-			.getModelById(modelId)
-			.then((res) => {
-				console.log(res.data.model);
-				setModel(res.data.model);
-			})
-			.catch((err) => {
-				console.log(err);
-				toast.custom(<ApiError message={err.response.data} />, {
-					duration: 5000,
-				});
-			});
-	}, []);
-
+const Model = ({ model, updateModel }: Props) => {
 	/* Functions */
 	const handleLike = () => {
 		DataService.threeD
@@ -38,7 +19,7 @@ const Model = () => {
 			})
 			.then((res) => {
 				console.log(res);
-				setModel(res.data.model);
+				updateModel(res.data.model);
 			})
 			.catch((err) => {
 				console.log(err);

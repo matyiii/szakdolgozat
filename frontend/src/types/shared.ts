@@ -7,11 +7,11 @@ type RouteType = {
 	type?: string;
 };
 
-type User = {
+type UserType = {
 	id: number | null;
 	name: string | null;
 	email: string | null;
-	token: string | null;
+	token?: string | null;
 };
 
 type CategoryType = {
@@ -51,9 +51,18 @@ type ThreeDModelType = {
 	category_id: number;
 	created_at: string;
 	updated_at: string;
-	user: User;
+	user: UserType;
 	category: CategoryType;
 	images: ImageType[];
 	files: FileType[];
 	is_liked?: boolean;
+};
+
+type CommentType = {
+	id: number;
+	model_id: number;
+	message: string;
+	user: UserType;
+	created_at: string;
+	updated_at: string;
 };
