@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
+
 class ThreeDModel extends BaseModel
 {
 	protected $connection = 'mysql';
@@ -60,7 +62,13 @@ class ThreeDModel extends BaseModel
 
 	public static function getById($id)
 	{
-		return self::with(['user', 'category', 'images', 'files'])
+		$model = self::with(['user', 'category', 'images', 'files'])
 			->find($id);
+
+		$user = Auth::user();
+
+		$model->is_liked = $user->likedModels->contains($model->id);
+
+		return $model;
 	}
 }

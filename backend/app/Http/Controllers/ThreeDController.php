@@ -6,6 +6,7 @@ use App\Models\ThreeDFile;
 use App\Models\ThreeDImage;
 use App\Models\ThreeDModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -106,10 +107,49 @@ class ThreeDController extends Controller
 		]);
 	}
 
-	public function loadFile(Request $request) {
+	public function loadFile(Request $request)
+	{
 		$fileId = $request->id;
 		$threeDFile = ThreeDFile::find($fileId);
-		
+
 		return Response::file(storage_path('app/public/' . $threeDFile->path));
+	}
+
+	public function likeModel(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'model_id' => 'required|exists:App\Models\ThreeDModel,id',
+			'is_liked' => 'required|bool',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$modelId = $validated['model_id'];
+		$isLiked = $validated['is_liked'];
+
+		$user = Auth::user();
+		$model = ThreeDModel::getById($modelId);
+
+		if ($user->likedModels->contains($model->id)) {
+			$user->likedModels()->detach($model->id);
+			$model->decrement('like_count');
+			$model->is_liked = !$isLiked;
+			$message = 'Model unliked successfully';
+		} else {
+			$user->likedModels()->attach($model->id);
+			$model->increment('like_count');
+			$model->is_liked = !$isLiked;;
+			$message = 'Model liked successfully';
+		}
+
+		return response()->json([
+			'message' => $message,
+			'model' => $model
+		]);
 	}
 }

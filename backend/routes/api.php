@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::post('/upload', [ThreeDController::class, 'upload']);
 		Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
 		Route::get('/getModel', [ThreeDController::class, 'getModelById']);
+		Route::post('/like', [ThreeDController::class, 'likeModel']);
 	});
 
 	/* Discover */
