@@ -12,4 +12,8 @@ export const ThreeDRequest = {
 	getModelById: (id: any) => {
 		return Api.get(`/3d/getModel?id=${id}`);
 	},
+
+	like: (payload: LikePayload) => {
+		return Api.post(`/3d/like`, payload);
+	},
 };
