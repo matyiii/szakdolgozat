@@ -56,13 +56,20 @@ type ThreeDModelType = {
 	images: ImageType[];
 	files: FileType[];
 	is_liked?: boolean;
+	comments: CommentType[];
 };
 
 type CommentType = {
 	id: number;
-	model_id: number;
-	message: string;
-	user: UserType;
+	user_id: number;
+	user?: UserType;
+	three_d_model_id: number;
+	text: string;
 	created_at: string;
 	updated_at: string;
+};
+
+type DateTimeType = {
+	date: string;
+	time: string;
 };

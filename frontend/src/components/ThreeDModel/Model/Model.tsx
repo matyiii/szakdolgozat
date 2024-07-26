@@ -30,7 +30,7 @@ const Model = ({ model, updateModel }: Props) => {
 	};
 
 	return (
-		<div className='container flex flex-col w-screen h-full bg-green-200 rounded-lg'>
+		<div className='container flex flex-col bg-green-200 rounded-lg'>
 			{model && (
 				<div className='m-2 bg-red-200 '>
 					<div>{model?.name}</div>

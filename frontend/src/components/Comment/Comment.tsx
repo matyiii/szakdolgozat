@@ -1,11 +1,61 @@
+import useUser from '@/hooks/useUser';
+import DataService from '@/service/DataService';
+import MoreIcon from '@rsuite/icons/More';
+import { Dropdown } from 'rsuite';
+import ApiError from '@/components/ApiErrror/ApiError';
+import toast from 'react-hot-toast';
+
 type Props = {
 	comment: CommentType;
+	deleteComment: any;
 };
 
-const Comment = ({ comment }: Props) => {
+const Comment = ({ comment, deleteComment }: Props) => {
+	/* Hooks */
+	const { user } = useUser();
+
+	const dateParts: string[] = comment.created_at.split(' ');
+	const datetime: DateTimeType = { date: dateParts[0], time: dateParts[1] };
+
+	/* Functions */
+	const removeComment = () => {
+		const payload: DeleteCommentPayload = {
+			comment_user_id: comment.user_id,
+			comment_id: comment.id,
+		};
+
+		DataService.threeD
+			.deleteComment(payload)
+			.then((res) => {
+				console.log(res);
+				deleteComment(res.data.comment_id);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.custom(<ApiError message={err.response.data} />, {
+					duration: 5000,
+				});
+			});
+	};
+
 	return (
-		<div>
-			<div>{comment.message}</div>
+		<div className='relative flex flex-row items-center rounded-lg border border-slate-300 mb-2 p-2'>
+			<div className='flex flex-col mx-2'>
+				<div className='text-slate-600'>{comment?.user?.name}</div>
+				<div className='text-xs text-slate-500'>{datetime.date}</div>
+				<div className='text-xs text-slate-500'>{datetime.time}</div>
+			</div>
+			<div className='ml-8'>{comment.text}</div>
+			{user.id === comment.user_id && (
+				<div className='absolute right-2 top-2'>
+					<Dropdown title={<MoreIcon />} noCaret>
+						<Dropdown.Item>Edit</Dropdown.Item>
+						<Dropdown.Item onClick={removeComment}>
+							Delete
+						</Dropdown.Item>
+					</Dropdown>
+				</div>
+			)}
 		</div>
 	);
 };

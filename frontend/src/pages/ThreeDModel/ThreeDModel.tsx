@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
 const ThreeDModel = () => {
+	/* Hooks */
 	const { modelId } = useParams();
 
 	/* States */
@@ -38,7 +39,25 @@ const ThreeDModel = () => {
 							setModel(model);
 						}}
 					/>
-					<Comments />
+					<Comments
+						modelId={model.id}
+						comments={model.comments}
+						updateModel={(model: ThreeDModelType) => {
+							setModel(model);
+						}}
+						deleteComment={(commentId: number) => {
+							setModel((prevModel?: ThreeDModelType) => {
+								if (!prevModel) return prevModel;
+
+								return {
+									...prevModel,
+									comments: prevModel?.comments.filter(
+										(c) => c.id !== commentId,
+									),
+								};
+							});
+						}}
+					/>
 				</>
 			)}
 		</div>

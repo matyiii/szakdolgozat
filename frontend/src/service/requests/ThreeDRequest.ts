@@ -14,6 +14,14 @@ export const ThreeDRequest = {
 	},
 
 	like: (payload: LikePayload) => {
-		return Api.post(`/3d/like`, payload);
+		return Api.post('/3d/like', payload);
+	},
+
+	postComment: (payload: CommentPayload) => {
+		return Api.post('/3d/comment/post', payload);
+	},
+
+	deleteComment: (payload: DeleteCommentPayload) => {
+		return Api.post('/3d/comment/delete', payload);
 	},
 };
