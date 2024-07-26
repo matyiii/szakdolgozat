@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelUserComment;
 use App\Models\ThreeDFile;
 use App\Models\ThreeDImage;
 use App\Models\ThreeDModel;
@@ -151,5 +152,70 @@ class ThreeDController extends Controller
 			'message' => $message,
 			'model' => $model
 		]);
+	}
+
+	public function postComment(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'model_id' => 'required|exists:App\Models\ThreeDModel,id',
+			'text' => 'required|min:3|max:1000',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$modelId = $validated['model_id'];
+		$text = $validated['text'];
+
+		$user = Auth::user();
+
+		ModelUserComment::create([
+			'user_id' => $user->id,
+			'three_d_model_id' => $modelId,
+			'text' => $text,
+		]);
+
+		$model = ThreeDModel::getById($modelId);
+
+		return response()->json([
+			'model' => $model
+		], 200);
+	}
+
+	public function deleteComment(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'comment_user_id' => 'required|exists:App\Models\User,id',
+			'comment_id' => 'required|exists:App\Models\ModelUserComment,id',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$commentUserId = $validated['comment_user_id'];
+		$commentId = $validated['comment_id'];
+
+		$user = Auth::user();
+		if ($user->id !== (int) $commentUserId) {
+			return response()->json([
+				'message' => 'You do not have permission to delete this comment.'
+			], 403);
+		}
+
+		$comment = ModelUserComment::findOrFail($commentId);
+		$comment->delete();
+
+		return response()->json([
+			'message' => 'Comment deleted successfully.',
+			'comment_id' => $commentId,
+		], 200);
 	}
 }

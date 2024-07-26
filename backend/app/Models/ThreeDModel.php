@@ -39,9 +39,14 @@ class ThreeDModel extends BaseModel
 		return $this->hasMany(ThreeDImage::class, 'three_d_model_id', 'id');
 	}
 
-	public function likedByUseres()
+	public function likedByUsers()
 	{
 		return $this->belongsToMany(User::class, 'model_user_likes')->withTimestamps();
+	}
+
+	public function comments()
+	{
+		return $this->hasMany(ModelUserComment::class)->orderByDesc('created_at');
 	}
 
 	/* Methods */
@@ -62,7 +67,7 @@ class ThreeDModel extends BaseModel
 
 	public static function getById($id)
 	{
-		$model = self::with(['user', 'category', 'images', 'files'])
+		$model = self::with(['user', 'category', 'images', 'files', 'comments.user'])
 			->find($id);
 
 		$user = Auth::user();
