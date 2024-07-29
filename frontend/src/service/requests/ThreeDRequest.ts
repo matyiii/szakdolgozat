@@ -24,4 +24,8 @@ export const ThreeDRequest = {
 	deleteComment: (payload: DeleteCommentPayload) => {
 		return Api.post('/3d/comment/delete', payload);
 	},
+
+	editComment: (payload: EditCommentPayload) => {
+		return Api.post('/3d/comment/edit', payload);
+	},
 };

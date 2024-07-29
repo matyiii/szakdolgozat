@@ -57,6 +57,20 @@ const ThreeDModel = () => {
 								};
 							});
 						}}
+						changeComment={(newCommentText: string, commentId: number) => {
+							setModel((prevModel?: ThreeDModelType) => {
+								if (!prevModel) return prevModel;
+
+								return {
+									...prevModel,
+									comments: prevModel.comments.map((comment) =>
+										comment.id === commentId
+											? { ...comment, text: newCommentText }
+											: comment,
+									),
+								};
+							});
+						}}
 					/>
 				</>
 			)}

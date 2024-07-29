@@ -24,3 +24,8 @@ type DeleteCommentPayload = {
 	comment_user_id: number;
 	comment_id: number;
 };
+
+type EditCommentPayload = {
+	comment_id: number;
+	new_comment: string;
+};

@@ -6,9 +6,16 @@ type Props = {
 	comments: CommentType[];
 	updateModel: any;
 	deleteComment: any;
+	changeComment: any;
 };
 
-const Comments = ({ comments, modelId, updateModel, deleteComment }: Props) => {
+const Comments = ({
+	comments,
+	modelId,
+	updateModel,
+	deleteComment,
+	changeComment,
+}: Props) => {
 	return (
 		<div className='container flex flex-col w-screen bg-purple-200 rounded-lg p-2'>
 			<NewComment modelId={modelId} updateModel={updateModel} />
@@ -18,6 +25,7 @@ const Comments = ({ comments, modelId, updateModel, deleteComment }: Props) => {
 						key={comment.id}
 						comment={comment}
 						deleteComment={deleteComment}
+						handleCommentChange={changeComment}
 					/>
 				))}
 			</div>
