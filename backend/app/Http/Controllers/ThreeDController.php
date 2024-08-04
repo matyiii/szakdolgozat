@@ -218,4 +218,33 @@ class ThreeDController extends Controller
 			'comment_id' => $commentId,
 		], 200);
 	}
+
+	public function editComment(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'comment_id' => 'required|exists:App\Models\ModelUserComment,id',
+			'new_comment' => 'required|string|max:1000',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$commentId = $validated['comment_id'];
+		$newComment = $validated['new_comment'];
+
+		$comment = ModelUserComment::find($commentId);
+		$comment->update([
+			'text' => $newComment,
+		]);
+
+
+		return response()->json([
+			'message' => 'Comment updated successfully.',
+			'new_comment' => $comment,
+		]);
+	}
 }

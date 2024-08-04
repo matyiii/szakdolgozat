@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::prefix('comment')->group(function() {
 			Route::post('/post', [ThreeDController::class, 'postComment']);
 			Route::post('/delete', [ThreeDController::class, 'deleteComment']);
+			Route::post('/edit', [ThreeDController::class, 'editComment']);
 		});
 	});
 
