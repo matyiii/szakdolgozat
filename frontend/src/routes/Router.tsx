@@ -5,7 +5,7 @@ import { routes } from './routes';
 const Router = () => {
 	return (
 		<Routes>
-			{routes.map((route: routeType, index: number) => {
+			{routes.map((route: RouteType, index: number) => {
 				return (
 					<Route
 						key={index}

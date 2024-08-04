@@ -67,11 +67,19 @@ const Register = () => {
 			<Form className='p-2'>
 				<Form.Group controlId='username'>
 					<Form.ControlLabel>Username</Form.ControlLabel>
-					<Form.Control name='username' onChange={handleInputChange} value={payload.username} />
+					<Form.Control
+						name='username'
+						onChange={handleInputChange}
+						value={payload.username}
+					/>
 				</Form.Group>
 				<Form.Group controlId='email'>
 					<Form.ControlLabel>Email</Form.ControlLabel>
-					<Form.Control name='email' onChange={handleInputChange} value={payload.email} />
+					<Form.Control
+						name='email'
+						onChange={handleInputChange}
+						value={payload.email}
+					/>
 				</Form.Group>
 				<Form.Group controlId='password'>
 					<Form.ControlLabel>Password</Form.ControlLabel>
@@ -94,7 +102,9 @@ const Register = () => {
 				<Form.Group>
 					<ButtonToolbar>
 						<NavLink to='/login'>
-							<Button appearance='link'>Already have an account? Sign in</Button>
+							<Button appearance='link'>
+								Already have an account? Sign in
+							</Button>
 						</NavLink>
 						<Button appearance='primary' onClick={handleSubmit}>
 							Sign up

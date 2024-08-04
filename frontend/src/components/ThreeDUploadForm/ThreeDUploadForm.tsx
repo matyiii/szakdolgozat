@@ -79,7 +79,11 @@ const ThreeDUploadForm = () => {
 			<Form>
 				<Form.Group controlId='model_name'>
 					<Form.ControlLabel>Model Name</Form.ControlLabel>
-					<Form.Control name='model_name' onChange={handleFormChange} value={form.model_name} />
+					<Form.Control
+						name='model_name'
+						onChange={handleFormChange}
+						value={form.model_name}
+					/>
 				</Form.Group>
 				<Form.Group controlId='category'>
 					<Form.ControlLabel>Category</Form.ControlLabel>

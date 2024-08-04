@@ -48,6 +48,7 @@ const Model = ({ model, updateModel }: Props) => {
 						</div>
 						<div>
 							<img
+								className='h-60'
 								src={`${import.meta.env.VITE_STORAGE_API}${model?.images[0].path}`}
 							/>
 						</div>

@@ -52,7 +52,11 @@ const Login = () => {
 			<Form className='p-2'>
 				<Form.Group controlId='email'>
 					<Form.ControlLabel>Email</Form.ControlLabel>
-					<Form.Control name='email' onChange={handleInputChange} value={payload.email} />
+					<Form.Control
+						name='email'
+						onChange={handleInputChange}
+						value={payload.email}
+					/>
 				</Form.Group>
 				<Form.Group controlId='password'>
 					<Form.ControlLabel>Password</Form.ControlLabel>

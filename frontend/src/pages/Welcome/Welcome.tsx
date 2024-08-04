@@ -1,4 +1,3 @@
-import STLViewer from '@/components/STL/STLViewer/STLViewer';
 import DataService from '@/service/DataService';
 import { Button } from 'rsuite';
 import useUser from '@/hooks/useUser';
@@ -10,9 +9,10 @@ const Welcome = () => {
 		<div>
 			{`Welcome - ${user.name}`}
 			<div className='content-div'>
-				{/*<img src='http://localhost:8000/images/example.jpg' />*/}
-				<img src='http://localhost:8000/storage/uploads/images/cpu.jpg' className='max-w-60' />
-				{/*<STLViewer />*/}
+				<img
+					src='http://localhost:8000/storage/uploads/images/cpu.jpg'
+					className='max-w-60'
+				/>
 				<Button
 					onClick={() => {
 						DataService.dummy

@@ -5,7 +5,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
 		'plugin:@typescript-eslint/recommended',
-		'prettier'
+		'prettier',
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
 	parser: '@typescript-eslint/parser',
@@ -20,9 +20,9 @@ module.exports = {
 				useTabs: true,
 				jsxSingleQuote: true,
 				trailingComma: 'all',
-			}
+			},
 		],
 		'@typescript-eslint/no-explicit-any': 'off',
-		'@typescript-eslint/no-unused-vars': 'off'
-	}
+		'@typescript-eslint/no-unused-vars': 'off',
+	},
 };
