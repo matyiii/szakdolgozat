@@ -7,6 +7,7 @@ type Props = {
 	updateModel: any;
 	deleteComment: any;
 	changeComment: any;
+	editComment: any;
 };
 
 const Comments = ({
@@ -15,6 +16,7 @@ const Comments = ({
 	updateModel,
 	deleteComment,
 	changeComment,
+	editComment,
 }: Props) => {
 	return (
 		<div className='container flex flex-col w-screen bg-purple-200 rounded-lg p-2'>
@@ -25,7 +27,8 @@ const Comments = ({
 						key={comment.id}
 						comment={comment}
 						deleteComment={deleteComment}
-						handleCommentChange={changeComment}
+						handleCommentInputChange={changeComment}
+						editComment={editComment}
 					/>
 				))}
 			</div>

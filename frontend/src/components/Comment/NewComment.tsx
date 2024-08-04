@@ -49,7 +49,9 @@ const NewComment = ({ modelId, updateModel }: Props) => {
 				value={comment}
 			/>
 			<div className='flex flex-row flex-wrap justify-between mt-1'>
-				<Button onClick={cancel}>Cancel</Button>
+				<Button onClick={cancel} disabled={!comment.length}>
+					Cancel
+				</Button>
 				<Button onClick={post} disabled={!comment.length}>
 					Post
 				</Button>

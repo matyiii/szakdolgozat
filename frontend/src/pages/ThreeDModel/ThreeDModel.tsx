@@ -71,6 +71,18 @@ const ThreeDModel = () => {
 								};
 							});
 						}}
+						editComment={(newComment: CommentType) => {
+							setModel((prevModel?: ThreeDModelType) => {
+								if (!prevModel) return prevModel;
+
+								return {
+									...prevModel,
+									comments: prevModel.comments.map((comment) =>
+										comment.id === newComment.id ? newComment : comment,
+									),
+								};
+							});
+						}}
 					/>
 				</>
 			)}

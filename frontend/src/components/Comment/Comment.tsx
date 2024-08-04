@@ -9,10 +9,16 @@ import { useState } from 'react';
 type Props = {
 	comment: CommentType;
 	deleteComment: any;
-	handleCommentChange: any;
+	handleCommentInputChange: any;
+	editComment: any;
 };
 
-const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
+const Comment = ({
+	comment,
+	deleteComment,
+	handleCommentInputChange,
+	editComment,
+}: Props) => {
 	/* Hooks */
 	const { user } = useUser();
 
@@ -23,7 +29,7 @@ const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 
 	/* Functions */
-	const removeComment = () => {
+	const remove = () => {
 		const payload: DeleteCommentPayload = {
 			comment_user_id: comment.user_id,
 			comment_id: comment.id,
@@ -43,7 +49,7 @@ const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
 			});
 	};
 
-	const editComment = () => {
+	const edit = () => {
 		const payload: EditCommentPayload = {
 			comment_id: comment.id,
 			new_comment: comment.text,
@@ -53,6 +59,8 @@ const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
 			.editComment(payload)
 			.then((res) => {
 				console.log(res);
+				editComment(res.data.new_comment);
+				setIsEditing(false);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -71,7 +79,7 @@ const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
 					as='textarea'
 					rows={2}
 					onChange={(newValue: any) =>
-						handleCommentChange(newValue, comment.id)
+						handleCommentInputChange(newValue, comment.id)
 					}
 					value={comment.text}
 				/>
@@ -79,21 +87,24 @@ const Comment = ({ comment, deleteComment, handleCommentChange }: Props) => {
 				<div className='ml-8'>{comment.text}</div>
 			)}
 			{user.id === comment.user_id && (
-				<>
-					<div className='absolute right-2 top-2'>
+				<div className='flex flex-col ml-auto'>
+					{!isEditing && (
 						<Dropdown title={<MoreIcon />} noCaret>
 							<Dropdown.Item onClick={() => setIsEditing(true)}>
 								Edit
 							</Dropdown.Item>
-							<Dropdown.Item onClick={removeComment}>Delete</Dropdown.Item>
+							<Dropdown.Item onClick={remove}>Delete</Dropdown.Item>
 						</Dropdown>
-					</div>
-					<div className='absolute right-2 bottom-2'>
-						<Button appearance='primary' onClick={editComment}>
-							Edit
-						</Button>
-					</div>
-				</>
+					)}
+					{isEditing && (
+						<div className='flex flex-col ml-1'>
+							<Button onClick={() => setIsEditing(false)}>X</Button>
+							<Button appearance='primary' onClick={edit}>
+								Edit
+							</Button>
+						</div>
+					)}
+				</div>
 			)}
 		</div>
 	);
