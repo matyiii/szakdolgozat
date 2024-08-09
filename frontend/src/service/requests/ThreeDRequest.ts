@@ -28,4 +28,8 @@ export const ThreeDRequest = {
 	editComment: (payload: EditCommentPayload) => {
 		return Api.post('/3d/comment/edit', payload);
 	},
+
+	download: (id: number) => {
+		return Api.get(`/3d/download?model_id=${id}`);
+	},
 };
