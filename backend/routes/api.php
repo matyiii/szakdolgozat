@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
 		Route::get('/getModel', [ThreeDController::class, 'getModelById']);
 		Route::post('/like', [ThreeDController::class, 'likeModel']);
+		Route::get('/download', [ThreeDController::class, 'downloadFile']);
 
 		Route::prefix('comment')->group(function() {
 			Route::post('/post', [ThreeDController::class, 'postComment']);

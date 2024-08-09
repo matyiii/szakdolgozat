@@ -9,6 +9,7 @@ use App\Models\ThreeDModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ThreeDController extends Controller
@@ -246,5 +247,29 @@ class ThreeDController extends Controller
 			'message' => 'Comment updated successfully.',
 			'new_comment' => $comment,
 		]);
+	}
+
+	public function downloadFile(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'model_id' => 'required|exists:App\Models\ThreeDModel,id',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$modelId = $validated['model_id'];
+
+		$file = ThreeDFile::where('three_d_model_id', $modelId)->first();
+
+		if (!Storage::disk('public')->exists($file->path)) {
+			return response()->json(['error' => 'File not found'], 404);
+		}
+
+		return Storage::disk('public')->download($file->path, $file->name);
 	}
 }
