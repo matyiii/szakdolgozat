@@ -19,6 +19,10 @@ const STLModel = ({ fileId }: Props) => {
 			const center = boundingBox.getCenter(new THREE.Vector3());
 			const size = boundingBox.getSize(new THREE.Vector3());
 
+			meshRef.current.position.x = -center.x;
+			meshRef.current.position.y = -center.y;
+			meshRef.current.position.z = -center.z;
+
 			if ((camera as THREE.PerspectiveCamera).isPerspectiveCamera) {
 				const perspectiveCamera = camera as THREE.PerspectiveCamera;
 				const maxDim = Math.max(size.x, size.y, size.z);
@@ -28,7 +32,7 @@ const STLModel = ({ fileId }: Props) => {
 				perspectiveCamera.position.z = center.z + cameraZ * 1;
 				perspectiveCamera.position.x = center.x + cameraZ * 0.1;
 				perspectiveCamera.position.y = center.y - cameraZ * 4;
-				perspectiveCamera.lookAt(center);
+				//perspectiveCamera.lookAt(center);
 			}
 		}
 	}, [geometry, camera]);

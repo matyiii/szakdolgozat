@@ -20,6 +20,8 @@ module.exports = {
 				useTabs: true,
 				jsxSingleQuote: true,
 				trailingComma: 'all',
+				printWidth: 140,
+				tabWidth: 4,
 			},
 		],
 		'@typescript-eslint/no-explicit-any': 'off',

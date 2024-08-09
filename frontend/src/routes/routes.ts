@@ -6,6 +6,7 @@ const Register = React.lazy(() => import('@/pages/Register/Register'));
 const Upload = React.lazy(() => import('@/pages/Upload/Upload'));
 const Discover = React.lazy(() => import('@/pages/Discover/Discover'));
 const ThreeDModel = React.lazy(() => import('@/pages/ThreeDModel/ThreeDModel'));
+const Profile = React.lazy(() => import('@/pages/Profile/Profile'));
 
 export const routes: RouteType[] = [
 	{
@@ -42,6 +43,12 @@ export const routes: RouteType[] = [
 		path: '/models/:modelId',
 		exact: true,
 		component: ThreeDModel,
+		isPrivate: false,
+	},
+	{
+		path: '/profile/:username',
+		exact: true,
+		component: Profile,
 		isPrivate: false,
 	},
 ];

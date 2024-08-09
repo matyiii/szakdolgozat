@@ -12,13 +12,10 @@ function App() {
 	return (
 		<>
 			<Header />
-			<main className='flex flex-col items-center justify-center flex-grow w-full h-full'>
+			<main className='flex flex-col items-center justify-center flex-grow w-full'>
 				<Router />
 				{isLoading && (
-					<Loader
-						size='lg'
-						className='absolute z-40 flex items-center justify-center w-full h-full bg-white bg-opacity-80'
-					/>
+					<Loader size='lg' className='absolute z-40 flex items-center justify-center w-full h-full bg-white bg-opacity-80' />
 				)}
 			</main>
 			<footer>

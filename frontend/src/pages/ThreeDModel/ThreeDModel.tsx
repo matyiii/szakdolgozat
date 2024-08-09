@@ -18,7 +18,6 @@ const ThreeDModel = () => {
 		DataService.threeD
 			.getModelById(modelId)
 			.then((res) => {
-				console.log(res.data.model);
 				setModel(res.data.model);
 			})
 			.catch((err) => {
@@ -30,62 +29,60 @@ const ThreeDModel = () => {
 	}, []);
 
 	return (
-		<div>
-			{model && (
-				<>
-					<Model
-						model={model}
-						updateModel={(model: ThreeDModelType) => {
-							setModel(model);
-						}}
-					/>
-					<Comments
-						modelId={model.id}
-						comments={model.comments}
-						updateModel={(model: ThreeDModelType) => {
-							setModel(model);
-						}}
-						deleteComment={(commentId: number) => {
-							setModel((prevModel?: ThreeDModelType) => {
-								if (!prevModel) return prevModel;
+		<div className='flex flex-col items-center w-full p-4'>
+			<div className='w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl'>
+				{model && (
+					<>
+						<Model
+							model={model}
+							updateModel={(model: ThreeDModelType) => {
+								setModel(model);
+							}}
+						/>
+						<Comments
+							modelId={model.id}
+							comments={model.comments}
+							updateModel={(model: ThreeDModelType) => {
+								setModel(model);
+							}}
+							deleteComment={(commentId: number) => {
+								setModel((prevModel?: ThreeDModelType) => {
+									if (!prevModel) return prevModel;
 
-								return {
-									...prevModel,
-									comments: prevModel?.comments.filter(
-										(c) => c.id !== commentId,
-									),
-								};
-							});
-						}}
-						changeComment={(newCommentText: string, commentId: number) => {
-							setModel((prevModel?: ThreeDModelType) => {
-								if (!prevModel) return prevModel;
+									return {
+										...prevModel,
+										comments: prevModel?.comments.filter((c) => c.id !== commentId),
+									};
+								});
+							}}
+							changeComment={(newCommentText: string, commentId: number) => {
+								setModel((prevModel?: ThreeDModelType) => {
+									if (!prevModel) return prevModel;
 
-								return {
-									...prevModel,
-									comments: prevModel.comments.map((comment) =>
-										comment.id === commentId
-											? { ...comment, text: newCommentText }
-											: comment,
-									),
-								};
-							});
-						}}
-						editComment={(newComment: CommentType) => {
-							setModel((prevModel?: ThreeDModelType) => {
-								if (!prevModel) return prevModel;
+									return {
+										...prevModel,
+										comments: prevModel.comments.map((comment) =>
+											comment.id === commentId ? { ...comment, text: newCommentText } : comment,
+										),
+									};
+								});
+							}}
+							editComment={(newComment: CommentType) => {
+								setModel((prevModel?: ThreeDModelType) => {
+									if (!prevModel) return prevModel;
 
-								return {
-									...prevModel,
-									comments: prevModel.comments.map((comment) =>
-										comment.id === newComment.id ? newComment : comment,
-									),
-								};
-							});
-						}}
-					/>
-				</>
-			)}
+									return {
+										...prevModel,
+										comments: prevModel.comments.map((comment) =>
+											comment.id === newComment.id ? newComment : comment,
+										),
+									};
+								});
+							}}
+						/>
+					</>
+				)}
+			</div>
 		</div>
 	);
 };

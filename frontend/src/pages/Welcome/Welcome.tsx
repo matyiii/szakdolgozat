@@ -9,10 +9,6 @@ const Welcome = () => {
 		<div>
 			{`Welcome - ${user.name}`}
 			<div className='content-div'>
-				<img
-					src='http://localhost:8000/storage/uploads/images/cpu.jpg'
-					className='max-w-60'
-				/>
 				<Button
 					onClick={() => {
 						DataService.dummy
