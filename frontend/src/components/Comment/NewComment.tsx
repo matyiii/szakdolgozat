@@ -27,6 +27,7 @@ const NewComment = ({ modelId, updateModel }: Props) => {
 			.postComment(payload)
 			.then((res) => {
 				updateModel(res.data.model);
+				setComment('');
 			})
 			.catch((err) => {
 				console.log(err);

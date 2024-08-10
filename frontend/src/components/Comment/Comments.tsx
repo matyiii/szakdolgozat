@@ -14,17 +14,19 @@ const Comments = ({ comments, modelId, updateModel, deleteComment, changeComment
 	return (
 		<div className='container flex flex-col bg-purple-200 rounded-lg p-2'>
 			<NewComment modelId={modelId} updateModel={updateModel} />
-			<div className='bg-white rounded-lg p-2'>
-				{comments.map((comment: CommentType) => (
-					<Comment
-						key={comment.id}
-						comment={comment}
-						deleteComment={deleteComment}
-						handleCommentInputChange={changeComment}
-						editComment={editComment}
-					/>
-				))}
-			</div>
+			{Boolean(comments.length) && (
+				<div className='bg-white rounded-lg p-2'>
+					{comments.map((comment: CommentType) => (
+						<Comment
+							key={comment.id}
+							comment={comment}
+							deleteComment={deleteComment}
+							handleCommentInputChange={changeComment}
+							editComment={editComment}
+						/>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
