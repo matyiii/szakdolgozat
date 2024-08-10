@@ -47,6 +47,7 @@ type ThreeDModelType = {
 	is_banned: boolean;
 	is_highlighted: boolean;
 	like_count: number;
+	download_count: number;
 	user_id: number;
 	category_id: number;
 	created_at: string;

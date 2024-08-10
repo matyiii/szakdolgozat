@@ -4,9 +4,10 @@ import ThreeDModelDetails from '@/components/ThreeDModel/ThreeDModelDetails/Thre
 type Props = {
 	model: ThreeDModelType;
 	updateModel: any;
+	onDownload: any;
 };
 
-const Model = ({ model, updateModel }: Props) => {
+const Model = ({ model, updateModel, onDownload }: Props) => {
 	return (
 		<div className='p-2 bg-green-200 rounded-lg'>
 			{model && (
@@ -16,11 +17,19 @@ const Model = ({ model, updateModel }: Props) => {
 							<STLViewer fileId={model?.files[0].id} />
 						</div>
 						<div>
-							<img className='h-40' src={`${import.meta.env.VITE_STORAGE_API}${model?.images[0].path}`} alt='Model' />
+							<img
+								className='h-40'
+								src={
+									model?.images && model.images.length > 0
+										? `${import.meta.env.VITE_STORAGE_API}${model.images[0].path}`
+										: '/images/placeholder.PNG'
+								}
+								alt='Model'
+							/>
 						</div>
 					</div>
 					<div className='w-1/4'>
-						<ThreeDModelDetails model={model} updateModel={updateModel} />
+						<ThreeDModelDetails model={model} updateModel={updateModel} onDownload={onDownload} />
 					</div>
 				</div>
 			)}

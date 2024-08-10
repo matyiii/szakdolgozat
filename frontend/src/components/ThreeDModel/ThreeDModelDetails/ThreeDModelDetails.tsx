@@ -7,9 +7,10 @@ import { Button } from 'rsuite';
 type Props = {
 	model: ThreeDModelType;
 	updateModel: any;
+	onDownload: any;
 };
 
-const ThreeDModelDetails = ({ model, updateModel }: Props) => {
+const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 	/* Functions */
 	const handleLike = () => {
 		DataService.threeD
@@ -33,6 +34,7 @@ const ThreeDModelDetails = ({ model, updateModel }: Props) => {
 		DataService.threeD
 			.download(model?.id)
 			.then((res) => {
+				onDownload();
 				// Create a Blob from the response data
 				const blob = new Blob([res.data], { type: res.headers['content-type'] });
 
@@ -87,6 +89,7 @@ const ThreeDModelDetails = ({ model, updateModel }: Props) => {
 				</NavLink>
 			</div>
 			<p>{`Like count: ${model?.like_count}`}</p>
+			<p>{`Download count: ${model?.download_count}`}</p>
 			<p className='my-2'>
 				<Button appearance='primary' onClick={handleLike}>{`${model?.is_liked ? 'Unlike' : 'Like'}`}</Button>
 			</p>

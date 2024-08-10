@@ -28,6 +28,18 @@ const ThreeDModel = () => {
 			});
 	}, []);
 
+	/* Functions */
+	const onDownloadHandler = () => {
+		setModel((prevModel) => {
+			if (!prevModel) return prevModel;
+
+			return {
+				...prevModel,
+				download_count: prevModel?.download_count + 1,
+			};
+		});
+	};
+
 	return (
 		<div className='flex flex-col items-center w-full p-4'>
 			<div className='w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl'>
@@ -38,6 +50,7 @@ const ThreeDModel = () => {
 							updateModel={(model: ThreeDModelType) => {
 								setModel(model);
 							}}
+							onDownload={onDownloadHandler}
 						/>
 						<Comments
 							modelId={model.id}

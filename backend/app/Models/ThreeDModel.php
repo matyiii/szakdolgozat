@@ -14,6 +14,7 @@ class ThreeDModel extends BaseModel
 		'is_banned',
 		'is_highlighted',
 		'like_count',
+		'download_count',
 		'user_id',
 		'category_id',
 	];
@@ -75,5 +76,11 @@ class ThreeDModel extends BaseModel
 		$model->is_liked = $user->likedModels->contains($model->id);
 
 		return $model;
+	}
+
+	public static function updateDownloadCount($modelId)
+	{
+		$model = self::find($modelId);
+		$model->update(['download_count' => $model->download_count + 1]);
 	}
 }

@@ -265,6 +265,7 @@ class ThreeDController extends Controller
 		$modelId = $validated['model_id'];
 
 		$file = ThreeDFile::where('three_d_model_id', $modelId)->first();
+		ThreeDModel::updateDownloadCount($modelId);
 
 		if (!Storage::disk('public')->exists($file->path)) {
 			return response()->json(['error' => 'File not found'], 404);
