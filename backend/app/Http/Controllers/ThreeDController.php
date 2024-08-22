@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use ZipArchive;
 
 class ThreeDController extends Controller
 {
@@ -264,13 +265,35 @@ class ThreeDController extends Controller
 		$validated = $validator->validated();
 		$modelId = $validated['model_id'];
 
-		$file = ThreeDFile::where('three_d_model_id', $modelId)->first();
-		ThreeDModel::updateDownloadCount($modelId);
+		$files = ThreeDFile::where('three_d_model_id', $modelId)->get();
+		$images = ThreeDImage::where('three_d_model_id', $modelId)->get();
 
-		if (!Storage::disk('public')->exists($file->path)) {
-			return response()->json(['error' => 'File not found'], 404);
+		$zip = new ZipArchive;
+		$zipFileName = 'model_' . $modelId . '_files.zip';
+		$zipFilePath = storage_path('app/public/' . $zipFileName);
+
+		if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+			foreach ($files as $file) {
+				if (Storage::disk('public')->exists($file->path)) {
+					$zip->addFile(storage_path('app/public/' . $file->path), $file->name);
+				}
+			}
+
+			foreach ($images as $image) {
+				if (Storage::disk('public')->exists($image->path)) {
+					$zip->addFile(storage_path('app/public/' . $image->path), $image->name);
+				}
+			}
+
+			$zip->close();
+
+			ThreeDModel::updateDownloadCount($modelId);
+
+			return response()
+				->download($zipFilePath)
+				->deleteFileAfterSend(true);
+		} else {
+			return response()->json(['error' => 'Failed to create ZIP file'], 500);
 		}
-
-		return Storage::disk('public')->download($file->path, $file->name);
 	}
 }

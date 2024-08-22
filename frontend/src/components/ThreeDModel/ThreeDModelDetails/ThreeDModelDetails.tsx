@@ -35,6 +35,7 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 			.download(model?.id)
 			.then((res) => {
 				onDownload();
+
 				// Create a Blob from the response data
 				const blob = new Blob([res.data], { type: res.headers['content-type'] });
 
@@ -42,23 +43,7 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 				const url = window.URL.createObjectURL(blob);
 				const link = document.createElement('a');
 				link.href = url;
-
-				// Extract the filename from the Content-Disposition header
-				const contentDisposition = res.headers['content-disposition'];
-				let fileName = 'downloaded_file';
-
-				if (contentDisposition && contentDisposition.indexOf('attachment') !== -1) {
-					const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
-					if (matches != null && matches[1]) {
-						fileName = matches[1].replace(/['"]/g, '');
-					}
-				}
-
-				// If the filename does not have an extension, add it based on the content type
-				if (!fileName.includes('.')) {
-					const fileExtension = res.headers['content-type'].split('/')[1];
-					fileName += `.${fileExtension}`;
-				}
+				const fileName = model.name;
 
 				// Set the download attribute with the filename
 				link.setAttribute('download', fileName);

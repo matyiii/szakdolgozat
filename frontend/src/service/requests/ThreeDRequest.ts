@@ -30,6 +30,6 @@ export const ThreeDRequest = {
 	},
 
 	download: (id: number) => {
-		return Api.get(`/3d/download?model_id=${id}`);
+		return Api.get(`/3d/download?model_id=${id}`, { responseType: 'blob' });
 	},
 };
