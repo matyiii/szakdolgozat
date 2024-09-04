@@ -70,7 +70,10 @@ class ThreeDController extends Controller
 			}
 		}
 
-		return response()->json(['message' => 'Files uploaded successfully'], 200);
+		return response()->json([
+			'message' => 'Files uploaded successfully',
+			'model_id' => $threeDModel->id,
+		], 200);
 	}
 
 

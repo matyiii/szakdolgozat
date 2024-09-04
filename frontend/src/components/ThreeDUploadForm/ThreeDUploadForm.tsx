@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { Button, ButtonToolbar, Form, SelectPicker, Uploader } from 'rsuite';
 import { FileType } from 'rsuite/esm/Uploader';
 import ApiError from '../ApiErrror/ApiError';
+import { useNavigate } from 'react-router-dom';
 
 type ThreeDUploadFormType = {
 	model_name: string;
@@ -14,6 +15,9 @@ type ThreeDUploadFormType = {
 };
 
 const ThreeDUploadForm = () => {
+	/* Hooks */
+	const navigate = useNavigate();
+
 	/* Selectors */
 	const categories = useAppSelector(selectCategories);
 
@@ -64,7 +68,9 @@ const ThreeDUploadForm = () => {
 		DataService.threeD
 			.upload(formData)
 			.then((res) => {
-				console.log(res);
+				const { message, model_id } = res.data;
+				toast.success(message, { duration: 3000 });
+				navigate(`/models/${model_id}`);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -79,11 +85,7 @@ const ThreeDUploadForm = () => {
 			<Form>
 				<Form.Group controlId='model_name'>
 					<Form.ControlLabel>Model Name</Form.ControlLabel>
-					<Form.Control
-						name='model_name'
-						onChange={handleFormChange}
-						value={form.model_name}
-					/>
+					<Form.Control name='model_name' onChange={handleFormChange} value={form.model_name} />
 				</Form.Group>
 				<Form.Group controlId='category'>
 					<Form.ControlLabel>Category</Form.ControlLabel>
@@ -104,14 +106,7 @@ const ThreeDUploadForm = () => {
 						}}
 					/>
 				</Form.Group>
-				<Uploader
-					draggable
-					multiple
-					action=''
-					autoUpload={false}
-					name='files'
-					onChange={handleFileUpload}
-				>
+				<Uploader draggable multiple action='' autoUpload={false} name='files' onChange={handleFileUpload}>
 					<div className='flex items-center justify-center'>
 						<span>Click or Drag files to this area to upload</span>
 					</div>
