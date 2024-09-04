@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
 		$this->call([
 			CategorySeeder::class,
 			UserSeeder::class,
+			ThreeDModelSeeder::class,
+			ThreeDImageSeeder::class,
+			ThreeDFileSeeder::class,
 		]);
 	}
 }

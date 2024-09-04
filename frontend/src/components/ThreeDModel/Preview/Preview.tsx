@@ -19,7 +19,7 @@ const Preview = ({ model }: Props) => {
 				<div className='my-2 text-white text-lg font-semibold'>{model.name}</div>
 				<div className='px-4 pb-4'>
 					<img
-						className='w-full max-w-xs rounded-lg shadow-md'
+						className='w-full max-w-xs max-h-52 rounded-lg shadow-md'
 						src={
 							model?.images && model.images.length > 0
 								? `${import.meta.env.VITE_STORAGE_API}${model.images[0].path}`
