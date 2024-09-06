@@ -299,4 +299,11 @@ class ThreeDController extends Controller
 			return response()->json(['error' => 'Failed to create ZIP file'], 500);
 		}
 	}
+
+	public function discover()
+	{
+		$discoveredModels = ThreeDModel::getDiscoveredModels();
+
+		return response()->json($discoveredModels);
+	}
 }

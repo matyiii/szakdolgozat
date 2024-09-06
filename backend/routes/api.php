@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	/* Site */
 	Route::get('/categories', [SiteController::class, 'getCategories']);
+	Route::get('/search', [SiteController::class, 'search']);
 
 	/* ThreeD */
 	Route::prefix('3d')->group(function () {
@@ -35,17 +36,14 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('/getModel', [ThreeDController::class, 'getModelById']);
 		Route::post('/like', [ThreeDController::class, 'likeModel']);
 		Route::get('/download', [ThreeDController::class, 'downloadFile']);
+		Route::get('/most_liked_models', [ThreeDController::class, 'getMostLikedModels']);
+		Route::get('/discover', [ThreeDController::class, 'discover']);
 
 		Route::prefix('comment')->group(function() {
 			Route::post('/post', [ThreeDController::class, 'postComment']);
 			Route::post('/delete', [ThreeDController::class, 'deleteComment']);
 			Route::post('/edit', [ThreeDController::class, 'editComment']);
 		});
-	});
-
-	/* Discover */
-	Route::prefix('discover')->group(function () {
-		Route::get('/most_liked_models', [ThreeDController::class, 'getMostLikedModels']);
 	});
 
 	Route::post('test', [DummyController::class, 'test']);

@@ -62,7 +62,15 @@ class ThreeDModel extends BaseModel
 	{
 		return self::with(['user', 'category', 'images', 'files'])
 			->orderBy('like_count', 'desc')
-			->take(10)
+			->take(8)
+			->get();
+	}
+
+	public static function getDiscoveredModels()
+	{
+		return self::with(['user', 'category', 'images', 'files'])
+			->inRandomOrder()
+			->take(8)
 			->get();
 	}
 
