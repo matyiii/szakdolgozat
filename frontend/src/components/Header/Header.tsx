@@ -5,6 +5,7 @@ import { useAppSelector } from '@/store/hooks';
 import { store } from '@/store/store';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Button } from 'rsuite';
+import SearchBar from '@/components/SearchBar/SearchBar';
 
 const Header = () => {
 	/*Hooks */
@@ -29,12 +30,17 @@ const Header = () => {
 	return (
 		<>
 			{user.id ? (
-				<Navbar>
+				<Navbar className='flex justify-between items-center'>
 					<Navbar.Brand as='div'>
 						<NavLink to='/'>PrintIT</NavLink>
 					</Navbar.Brand>
+					<Nav className='flex-grow flex justify-center'>
+						<Nav.Item as='div'>
+							<SearchBar />
+						</Nav.Item>
+					</Nav>
 					<Nav pullRight>
-						<Nav>
+						<Nav className='flex items-center'>
 							<Nav.Item as='div' className='py-0 m-4'>
 								<NavLink to='/discover' className='h-full content-center'>
 									Discover
@@ -60,7 +66,7 @@ const Header = () => {
 					</Nav>
 				</Navbar>
 			) : (
-				<Navbar>
+				<Navbar className='flex justify-between items-center'>
 					<Navbar.Brand as='div'>
 						<NavLink to='/'>PrintIT</NavLink>
 					</Navbar.Brand>

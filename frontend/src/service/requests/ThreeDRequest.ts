@@ -6,7 +6,11 @@ export const ThreeDRequest = {
 	},
 
 	getMostLikedModels: () => {
-		return Api.get('/discover/most_liked_models');
+		return Api.get('/3d/most_liked_models');
+	},
+
+	discoverModels: () => {
+		return Api.get('/3d/discover');
 	},
 
 	getModelById: (id: any) => {

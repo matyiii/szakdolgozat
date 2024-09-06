@@ -7,7 +7,7 @@ const Discover = () => {
 
 	useEffect(() => {
 		DataService.threeD
-			.getMostLikedModels()
+			.discoverModels()
 			.then((res) => {
 				console.log(res);
 				setModels(res.data);

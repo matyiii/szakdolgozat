@@ -7,6 +7,7 @@ const Upload = React.lazy(() => import('@/pages/Upload/Upload'));
 const Discover = React.lazy(() => import('@/pages/Discover/Discover'));
 const ThreeDModel = React.lazy(() => import('@/pages/ThreeDModel/ThreeDModel'));
 const Profile = React.lazy(() => import('@/pages/Profile/Profile'));
+const Search = React.lazy(() => import('@/pages/Search/Search'));
 
 export const routes: RouteType[] = [
 	{
@@ -49,6 +50,12 @@ export const routes: RouteType[] = [
 		path: '/profile/:username',
 		exact: true,
 		component: Profile,
+		isPrivate: false,
+	},
+	{
+		path: '/search',
+		exact: true,
+		component: Search,
 		isPrivate: false,
 	},
 ];
