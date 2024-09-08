@@ -27,8 +27,8 @@ const SearchBar = () => {
 			<Form.Group controlId='search_bar'>
 				<InputGroup inside>
 					<Form.Control name='search_bar' placeholder='Search PrintIT' onChange={handleInputChange} value={inputValue} />
-					<InputGroup.Addon>
-						<SearchIcon />
+					<InputGroup.Addon className='cursor-pointer'>
+						<SearchIcon onClick={handleFormSubmit} />
 					</InputGroup.Addon>
 				</InputGroup>
 			</Form.Group>
