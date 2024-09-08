@@ -47,7 +47,7 @@ const Header = () => {
 								</NavLink>
 							</Nav.Item>
 							<Nav.Item as='div' className='py-0 m-4'>
-								<NavLink to='/login' className='h-full content-center'>
+								<NavLink to='/forum' className='h-full content-center'>
 									Forum
 								</NavLink>
 							</Nav.Item>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DummyController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ThreeDController;
 use Illuminate\Support\Facades\Route;
@@ -39,11 +40,17 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('/most_liked_models', [ThreeDController::class, 'getMostLikedModels']);
 		Route::get('/discover', [ThreeDController::class, 'discover']);
 
-		Route::prefix('comment')->group(function() {
+		Route::prefix('comment')->group(function () {
 			Route::post('/post', [ThreeDController::class, 'postComment']);
 			Route::post('/delete', [ThreeDController::class, 'deleteComment']);
 			Route::post('/edit', [ThreeDController::class, 'editComment']);
 		});
+	});
+
+	/* Forum */
+	Route::prefix('forum')->group(function () {
+		Route::get('', [ForumController::class, 'getForums']);
+		Route::get('/{forum_id}', [ForumController::class, 'getTopics']);
 	});
 
 	Route::post('test', [DummyController::class, 'test']);

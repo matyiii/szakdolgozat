@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
 			ThreeDModelSeeder::class,
 			ThreeDImageSeeder::class,
 			ThreeDFileSeeder::class,
+			ForumSeeder::class,
+			TopicSeeder::class,
+			TopicCommentSeeder::class,
 		]);
 	}
 }

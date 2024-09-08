@@ -74,3 +74,36 @@ type DateTimeType = {
 	date: string;
 	time: string;
 };
+
+type ForumType = {
+	id: number;
+	name: string;
+	description?: string;
+	created_at: string;
+	updated_at: string;
+	topics?: TopicType[];
+};
+
+type TopicType = {
+	id: number;
+	forum_id: number;
+	user_id: number;
+	title: string;
+	description: string;
+	created_at: string;
+	updated_at: string;
+	user?: UserType;
+	forum?: ForumType;
+	comments?: TopicCommentType[];
+};
+
+type TopicCommentType = {
+	id: number;
+	topic_id: number;
+	user_id: number;
+	comment: string;
+	created_at: string;
+	updated_at: string;
+	user?: UserType;
+	topic?: TopicType;
+};
