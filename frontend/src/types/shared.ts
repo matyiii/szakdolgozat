@@ -95,6 +95,7 @@ type TopicType = {
 	user?: UserType;
 	forum?: ForumType;
 	comments?: TopicCommentType[];
+	last_comment?: TopicCommentType;
 };
 
 type TopicCommentType = {
