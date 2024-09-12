@@ -11,14 +11,17 @@ class ForumController extends Controller
 	public function getForums()
 	{
 		$forums = Forum::all();
+
 		return response()->json($forums);
 	}
 
 	public function getTopics(Request $request)
 	{
-		$forum = Forum::where('name', $request->forum)->get();
-
-		$topics = Topic::where('forum_id', $forum->id)->get();
+		$topics = Topic::with([
+			'user',
+			'lastComment',
+		])
+			->where('forum_id', $request->forum_id)->get();
 
 		return response()->json($topics);
 	}

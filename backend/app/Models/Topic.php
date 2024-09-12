@@ -31,4 +31,9 @@ class Topic extends BaseModel
 	{
 		return $this->hasMany(TopicComment::class, 'topic_comments_id', 'id');
 	}
+
+	public function lastComment()
+	{
+		return $this->hasOne(TopicComment::class, 'topic_id', 'id')->orderByDesc('created_at');
+	}
 }
