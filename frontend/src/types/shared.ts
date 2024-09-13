@@ -85,13 +85,13 @@ type ForumType = {
 };
 
 type TopicType = {
-	id: number;
-	forum_id: number;
-	user_id: number;
+	id?: number;
+	forum_id?: number;
+	user_id?: number;
 	title: string;
 	description: string;
-	created_at: string;
-	updated_at: string;
+	created_at?: string;
+	updated_at?: string;
 	user?: UserType;
 	forum?: ForumType;
 	comments?: TopicCommentType[];
