@@ -1,19 +1,25 @@
-import CustomModal from '@/components/Modal/CustomModal';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { forwardRef, useState, useEffect } from 'react';
 import { Button, ButtonToolbar, Form, Input } from 'rsuite';
+import CustomModal from '@/components/Modal/CustomModal';
 
 type TopicUploadModalProps = {
 	open: boolean;
-	onClose: () => void;
-	handleSubmit: () => void;
+	onClose: any;
+	handleSubmit: any;
 };
 
-export const TopicUploadModal = ({ open, onClose, handleSubmit }: TopicUploadModalProps) => {
-	/* State */
-	const [form, setForm] = useState<TopicType>({ title: '', description: '' });
+const Textarea = forwardRef((props, ref) => <Input {...props} as='textarea' />);
 
-	/* Functions */
+export const TopicUploadModal = ({ open, onClose, handleSubmit }: TopicUploadModalProps) => {
+	const initialFormState = { title: '', description: '' };
+	const [form, setForm] = useState<TopicType>(initialFormState);
+
+	useEffect(() => {
+		if (open) {
+			setForm(initialFormState);
+		}
+	}, [open]);
+
 	const handleFormChange = (value: any, e: any) => {
 		const { name } = e.currentTarget;
 		setForm((prevState: TopicType) => ({
@@ -32,14 +38,14 @@ export const TopicUploadModal = ({ open, onClose, handleSubmit }: TopicUploadMod
 					</Form.Group>
 					<Form.Group controlId='description'>
 						<Form.ControlLabel>Description</Form.ControlLabel>
-						<Form.Control name='description' onChange={handleFormChange} value={form?.description} />
+						<Form.Control name='description' accepter={Textarea} onChange={handleFormChange} value={form?.description} />
 					</Form.Group>
 					<Form.Group>
 						<ButtonToolbar className='flex justify-between space-x-2'>
-							<NavLink to='/register'>
-								<Button appearance='link'>Cancel</Button>
-							</NavLink>
-							<Button appearance='primary' onClick={handleSubmit}>
+							<Button appearance='link' onClick={onClose}>
+								Cancel
+							</Button>
+							<Button appearance='primary' onClick={() => handleSubmit(form)}>
 								Add
 							</Button>
 						</ButtonToolbar>

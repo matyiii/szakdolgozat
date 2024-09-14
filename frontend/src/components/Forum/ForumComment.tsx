@@ -7,37 +7,37 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 
 type Props = {
-	comment: CommentType;
+	comment: TopicCommentType;
 	deleteComment: any;
-	handleCommentInputChange: any;
-	editComment: any;
+	editComment?: any;
 };
 
-const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment }: Props) => {
+const ForumComment = ({ comment, deleteComment, editComment }: Props) => {
 	/* Hooks */
 	const { user } = useUser();
 
 	const dateParts: string[] = comment.created_at.split(' ');
-	const datetime: DateTimeType = { date: dateParts[0], time: dateParts[1] };
+	const datetime: { date: string; time: string } = { date: dateParts[0], time: dateParts[1] };
 
 	/* State */
 	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editedText, setEditedText] = useState<string>(comment.comment);
 
 	/* Functions */
 	const remove = () => {
-		const payload: DeleteCommentPayload = {
-			comment_user_id: comment.user_id,
+		const payload: DeleteForumCommentPayload = {
 			comment_id: comment.id,
 		};
 
-		DataService.threeD
+		DataService.forum
 			.deleteComment(payload)
 			.then((res) => {
-				console.log(res);
-				deleteComment(res.data.comment_id);
+				const { comment_id, message } = res.data;
+
+				deleteComment(comment_id);
+				toast.success(message);
 			})
 			.catch((err) => {
-				console.log(err);
 				toast.custom(<ApiError message={err.response.data} />, {
 					duration: 5000,
 				});
@@ -45,17 +45,19 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 	};
 
 	const edit = () => {
-		const payload: EditCommentPayload = {
+		const payload: EditForumCommentPayload = {
 			comment_id: comment.id,
-			new_comment: comment.text,
+			new_comment: editedText,
 		};
 
-		DataService.threeD
+		DataService.forum
 			.editComment(payload)
 			.then((res) => {
-				console.log(res);
-				editComment(res.data.new_comment);
+				const { new_comment, message } = res.data;
+
+				editComment(new_comment);
 				setIsEditing(false);
+				toast.success(message);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -63,21 +65,16 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 	};
 
 	return (
-		<div className='relative flex flex-row items-center rounded-lg border border-slate-300 mb-2 p-2'>
+		<div className='relative flex flex-row items-center rounded-lg border border-slate-200 mb-2 p-2'>
 			<div className='flex flex-col mx-2'>
 				<div className='text-slate-600'>{comment?.user?.name}</div>
 				<div className='text-xs text-slate-500'>{datetime.date}</div>
 				<div className='text-xs text-slate-500'>{datetime.time}</div>
 			</div>
 			{isEditing ? (
-				<Input
-					as='textarea'
-					rows={2}
-					onChange={(newValue: any) => handleCommentInputChange(newValue, comment.id)}
-					value={comment.text}
-				/>
+				<Input as='textarea' rows={2} onChange={(value: any) => setEditedText(value)} value={editedText} />
 			) : (
-				<div className='ml-8'>{comment.text}</div>
+				<div className='ml-8'>{comment.comment}</div>
 			)}
 			{user.id === comment.user_id && (
 				<div className='flex flex-col ml-auto'>
@@ -89,10 +86,10 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 					)}
 					{isEditing && (
 						<div className='flex flex-col ml-1'>
-							<Button onClick={() => setIsEditing(false)}>X</Button>
 							<Button appearance='primary' onClick={edit}>
-								Edit
+								Save
 							</Button>
+							<Button onClick={() => setIsEditing(false)}>Cancel</Button>
 						</div>
 					)}
 				</div>
@@ -101,4 +98,4 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 	);
 };
 
-export default Comment;
+export default ForumComment;

@@ -29,3 +29,23 @@ type EditCommentPayload = {
 	comment_id: number;
 	new_comment: string;
 };
+
+type CreateTopicPayload = {
+	forum_id: number;
+	new_topic: TopicType;
+};
+
+type NewForumCommentPayload = {
+	forum_id: number;
+	topic_id: number;
+	new_comment: string;
+};
+
+type DeleteForumCommentPayload = {
+	comment_id: number;
+};
+
+type EditForumCommentPayload = {
+	comment_id: number;
+	new_comment: string;
+};
