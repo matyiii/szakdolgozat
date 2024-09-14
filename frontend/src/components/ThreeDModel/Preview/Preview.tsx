@@ -11,12 +11,12 @@ const Preview = ({ model }: Props) => {
 	return (
 		<NavLink
 			to={`/models/${model.id}`}
-			className='relative bg-red-400 m-2 rounded-lg shadow-lg hover:bg-red-500 transition duration-300 ease-in-out hover:cursor-pointer flex flex-col items-center'
+			className='relative bg-slate-200 m-2 rounded-lg shadow-lg hover:bg-slate-300 transition duration-300 ease-in-out hover:cursor-pointer flex flex-col items-center'
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
 			<div className='flex flex-col items-center'>
-				<div className='my-2 text-white text-lg font-semibold'>{model.name}</div>
+				<div className='my-2 text-gray-500 text-lg font-semibold'>{model.name}</div>
 				<div className='px-4 pb-4'>
 					<img
 						className='w-full max-w-xs max-h-52 rounded-lg shadow-md'

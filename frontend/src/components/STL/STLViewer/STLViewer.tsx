@@ -16,6 +16,7 @@ const STLViewer = ({ fileId }: Props) => {
 			onCreated={({ gl, scene }) => {
 				scene.background = new THREE.Color(0x808080);
 			}}
+			className='rounded-lg'
 		>
 			<ambientLight intensity={0.5} />
 			<directionalLight position={[1, 1, 1]} intensity={1} />

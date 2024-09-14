@@ -12,7 +12,7 @@ type Props = {
 
 const Comments = ({ comments, modelId, updateModel, deleteComment, changeComment, editComment }: Props) => {
 	return (
-		<div className='container flex flex-col bg-purple-200 rounded-lg p-2'>
+		<div className='container flex flex-col bg-gray-100 rounded-lg p-2'>
 			<NewComment modelId={modelId} updateModel={updateModel} />
 			{Boolean(comments.length) && (
 				<div className='bg-white rounded-lg p-2'>

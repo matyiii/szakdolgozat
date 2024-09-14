@@ -21,8 +21,8 @@ const Forum = () => {
 	}, []);
 
 	return (
-		<div className='w-full h-full p-6 bg-gray-100'>
-			<div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg'>
+		<div className='w-full h-full bg-gray-100 p-6'>
+			<div className='max-w-screen-lg mx-auto flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg'>
 				{forums?.map((forum: ForumType) => {
 					return (
 						<NavLink key={forum.id} to={`/forum/${forum.id}`} className='w-full'>

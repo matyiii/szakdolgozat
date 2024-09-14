@@ -62,27 +62,33 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 	};
 
 	return (
-		<div className='flex flex-col bg-orange-200 m-1 p-2 rounded-lg'>
-			<h1>Details:</h1>
-			<p>Name: {model?.name}</p>
-			<p>Category: {model?.category?.name}</p>
-			<p>Uploaded at: {model?.created_at}</p>
-			<div>
-				<p>Uploaded by:</p>
-				<NavLink to={`/profile/${model?.user?.name}`} className='underline'>
+		<div className='flex flex-col bg-white border border-gray-200 shadow-md p-2 rounded-lg'>
+			<h1 className='text-lg font-semibold text-gray-800 mb-4'>Details</h1>
+			<p className='text-sm text-gray-600 mb-2'>
+				<span className='font-medium'>Name:</span> {model?.name}
+			</p>
+			<p className='text-sm text-gray-600 mb-2'>
+				<span className='font-medium'>Category:</span> {model?.category?.name}
+			</p>
+			<p className='text-sm text-gray-600 mb-2'>
+				<span className='font-medium'>Uploaded at:</span> {model?.created_at}
+			</p>
+			<div className='text-sm text-gray-600 mb-4'>
+				<p className='font-medium'>Uploaded by:</p>
+				<NavLink to={`/profile/${model?.user?.name}`} className='text-blue-500 underline'>
 					{model?.user?.name}
 				</NavLink>
 			</div>
-			<p>{`Like count: ${model?.like_count}`}</p>
-			<p>{`Download count: ${model?.download_count}`}</p>
-			<p className='my-2'>
-				<Button appearance='primary' onClick={handleLike}>{`${model?.is_liked ? 'Unlike' : 'Like'}`}</Button>
-			</p>
-			<p>
-				<Button appearance='primary' onClick={downloadFiles}>
+			<p className='text-sm text-gray-600 mb-2'>{`Like count: ${model?.like_count}`}</p>
+			<p className='text-sm text-gray-600 mb-4'>{`Download count: ${model?.download_count}`}</p>
+			<div className='flex space-x-2'>
+				<Button appearance='primary' className='bg-blue-500 hover:bg-blue-600' onClick={handleLike}>
+					{`${model?.is_liked ? 'Unlike' : 'Like'}`}
+				</Button>
+				<Button appearance='ghost' className='bg-gray-100 hover:bg-gray-200' onClick={downloadFiles}>
 					Download Model
 				</Button>
-			</p>
+			</div>
 		</div>
 	);
 };

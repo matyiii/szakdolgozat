@@ -42,7 +42,7 @@ const NewComment = ({ modelId, updateModel }: Props) => {
 	};
 
 	return (
-		<div className='flex flex-col gap-1 bg-red-300 p-2 rounded-lg'>
+		<div className='flex flex-col gap-1 bg-slate-200 p-2 rounded-lg'>
 			<Input as='textarea' rows={2} onChange={handleCommentChange} value={comment} />
 			<div className='flex flex-row flex-wrap justify-between mt-1'>
 				<Button onClick={cancel} disabled={!comment.length}>

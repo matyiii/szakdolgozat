@@ -48,27 +48,34 @@ const Comments = () => {
 	};
 
 	return (
-		<div className='w-full h-full p-6 bg-gray-100'>
-			<div className='text-xl font-semibold text-gray-800 mb-4'>Comments</div>
-			<div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg'>
-				{loading ? (
-					<div className='text-center text-gray-500'>Loading comments...</div>
-				) : (
-					<>
-						<NewForumComment
-							forumId={forum_id}
-							topicId={topic_id}
-							updateTopic={(comments: TopicCommentType[]) => setComments(comments)}
-						/>
-						{comments.length > 0 ? (
-							comments.map((comment) => (
-								<ForumComment comment={comment} key={comment.id} deleteComment={deleteComment} editComment={editComment} />
-							))
-						) : (
-							<div className='text-sm text-gray-500'>No comments yet. Be the first to comment!</div>
-						)}
-					</>
-				)}
+		<div className='w-full h-full bg-gray-100 p-6'>
+			<div className='max-w-screen-lg mx-auto'>
+				<div className='text-xl font-semibold text-gray-800 mb-4'>Comments</div>
+				<div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg'>
+					{loading ? (
+						<div className='text-center text-gray-500'>Loading comments...</div>
+					) : (
+						<>
+							<NewForumComment
+								forumId={forum_id}
+								topicId={topic_id}
+								updateTopic={(comments: TopicCommentType[]) => setComments(comments)}
+							/>
+							{comments.length > 0 ? (
+								comments.map((comment) => (
+									<ForumComment
+										comment={comment}
+										key={comment.id}
+										deleteComment={deleteComment}
+										editComment={editComment}
+									/>
+								))
+							) : (
+								<div className='text-sm text-gray-500'>No comments yet. Be the first to comment!</div>
+							)}
+						</>
+					)}
+				</div>
 			</div>
 		</div>
 	);
