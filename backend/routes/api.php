@@ -51,6 +51,14 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::prefix('forum')->group(function () {
 		Route::get('', [ForumController::class, 'getForums']);
 		Route::get('/{forum_id}', [ForumController::class, 'getTopics']);
+		Route::get('/{forum_id}/{topic_id}', [ForumController::class, 'getComments']);
+		Route::post('/create_topic', [ForumController::class, 'createTopic']);
+
+		Route::prefix('comment')->group(function () {
+			Route::post('/post', [ForumController::class, 'postComment']);
+			Route::post('/delete', [ForumController::class, 'deleteComment']);
+			Route::post('/edit', [ForumController::class, 'editComment']);
+		});
 	});
 
 	Route::post('test', [DummyController::class, 'test']);

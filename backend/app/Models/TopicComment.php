@@ -12,7 +12,9 @@ class TopicComment extends BaseModel
 	protected $table = 'topic_comments';
 
 	protected $fillable = [
-		'comment'
+		'user_id',
+		'topic_id',
+		'comment',
 	];
 
 	/* Relations */

@@ -12,7 +12,9 @@ class Topic extends BaseModel
 	protected $table = 'topics';
 
 	protected $fillable = [
-		'name',
+		'forum_id',
+		'user_id',
+		'title',
 		'description'
 	];
 
@@ -29,11 +31,29 @@ class Topic extends BaseModel
 
 	public function comments()
 	{
-		return $this->hasMany(TopicComment::class, 'topic_comments_id', 'id');
+		return $this->hasMany(TopicComment::class, 'topic_id', 'id');
 	}
 
 	public function lastComment()
 	{
 		return $this->hasOne(TopicComment::class, 'topic_id', 'id')->orderByDesc('created_at');
+	}
+
+	/* Functions */
+	public static function getComments($forumId, $topicId)
+	{
+		$topic = self::with([
+			'comments' => function ($query) {
+				$query->orderBy('created_at', 'desc');
+			},
+			'comments.user',
+		])
+			->where([
+				'id' => $topicId,
+				'forum_id' => $forumId,
+			])
+			->first();
+
+		return $topic->comments;
 	}
 }
