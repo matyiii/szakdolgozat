@@ -66,14 +66,11 @@ const Header = () => {
 					</Nav>
 				</Navbar>
 			) : (
-				<Navbar className='flex justify-between items-center'>
+				<Navbar>
 					<Navbar.Brand as='div'>
 						<NavLink to='/'>PrintIT</NavLink>
 					</Navbar.Brand>
 					<Nav pullRight>
-						<Nav.Item as='div'>
-							<NavLink to='/discover'>Discover</NavLink>
-						</Nav.Item>
 						<Nav.Item as='div'>
 							<NavLink to='/register'>Sign up</NavLink>
 						</Nav.Item>

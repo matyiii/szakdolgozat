@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+/* Public APIs */
+Route::get('/3d/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
+
 Route::middleware('auth:sanctum')->group(function () {
 	/* Auth */
 	Route::post('/logout', [AuthController::class, 'logout']);
@@ -33,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	/* ThreeD */
 	Route::prefix('3d')->group(function () {
 		Route::post('/upload', [ThreeDController::class, 'upload']);
-		Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
+		//Route::get('/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
 		Route::get('/getModel', [ThreeDController::class, 'getModelById']);
 		Route::post('/like', [ThreeDController::class, 'likeModel']);
 		Route::get('/download', [ThreeDController::class, 'downloadFile']);
