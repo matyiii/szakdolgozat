@@ -5,6 +5,10 @@ export const ThreeDRequest = {
 		return Api.post('/3d/upload', payload);
 	},
 
+	getHighlightedModels: () => {
+		return Api.get('/3d/highlighted_models');
+	},
+
 	getMostLikedModels: () => {
 		return Api.get('/3d/most_liked_models');
 	},

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import STLViewer from '@/components/STL/STLViewer/STLViewer';
 import ThreeDModelDetails from '@/components/ThreeDModel/ThreeDModelDetails/ThreeDModelDetails';
+import CustomModal from '@/components/Modal/CustomModal';
 import { Carousel } from 'rsuite';
 
 type Props = {
@@ -9,6 +11,9 @@ type Props = {
 };
 
 const Model = ({ model, updateModel, onDownload }: Props) => {
+	const [openModal, setOpenModal] = useState(false);
+	const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
 	// Group images in sets of 3 for carousel slides
 	const groupedImages = [];
 	if (model?.images && model.images.length > 0) {
@@ -16,6 +21,11 @@ const Model = ({ model, updateModel, onDownload }: Props) => {
 			groupedImages.push(model.images.slice(i, i + 3));
 		}
 	}
+
+	const handleImageClick = (imagePath: string) => {
+		setSelectedImage(imagePath);
+		setOpenModal(true);
+	};
 
 	return (
 		<div className='p-4 bg-gray-100 rounded-lg'>
@@ -34,9 +44,10 @@ const Model = ({ model, updateModel, onDownload }: Props) => {
 											{group.map((image, imgIndex) => (
 												<img
 													key={imgIndex}
-													className='h-40 w-auto object-cover rounded-lg shadow-md'
+													className='h-40 w-auto object-cover rounded-lg shadow-md hover:cursor-pointer'
 													src={`${import.meta.env.VITE_STORAGE_API}${image.path}`}
 													alt={`Model Image ${imgIndex + 1}`}
+													onClick={() => handleImageClick(`${import.meta.env.VITE_STORAGE_API}${image.path}`)} // Image click handler
 												/>
 											))}
 										</div>
@@ -58,6 +69,12 @@ const Model = ({ model, updateModel, onDownload }: Props) => {
 						<ThreeDModelDetails model={model} updateModel={updateModel} onDownload={onDownload} />
 					</div>
 				</div>
+			)}
+
+			{selectedImage && (
+				<CustomModal open={openModal} onClose={() => setOpenModal(false)}>
+					<img src={selectedImage} alt='Selected Model Image' className='w-full h-auto' />
+				</CustomModal>
 			)}
 		</div>
 	);

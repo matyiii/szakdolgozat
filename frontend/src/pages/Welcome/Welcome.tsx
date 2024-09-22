@@ -9,7 +9,7 @@ const Welcome = () => {
 
 	useEffect(() => {
 		DataService.threeD
-			.getMostLikedModels()
+			.getHighlightedModels()
 			.then((res) => {
 				console.log(res);
 				setModels(res.data);

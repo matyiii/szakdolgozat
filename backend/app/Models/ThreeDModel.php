@@ -53,7 +53,7 @@ class ThreeDModel extends BaseModel
 	/* Methods */
 	public static function getHighlightedModels()
 	{
-		return self::with(['category', 'images', 'files'])
+		return self::with(['user', 'category', 'images', 'files'])
 			->where('is_highlighted', 1)
 			->get();
 	}

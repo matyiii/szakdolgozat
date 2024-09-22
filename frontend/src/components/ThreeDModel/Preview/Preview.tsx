@@ -30,10 +30,10 @@ const Preview = ({ model }: Props) => {
 				</div>
 			</div>
 			{isHovered && (
-				<div className='absolute w-full h-full pb-4 bg-black rounded-lg bg-opacity-20 flex flex-col items-center justify-end transition duration-300 ease-in-out'>
+				<div className='absolute w-full h-full pb-4 bg-black rounded-lg bg-opacity-20 flex flex-col items-center justify-end transition duration-300 ease-in-out px-5'>
 					<div className='text-white text-lg'>{model.like_count} Likes</div>
 					<div className='text-white text-lg'>Category: {model.category.name}</div>
-					<div className='text-white text-xl font-bold mb-2'>Uploaded by: {model.user.name}</div>
+					<div className='text-white text-lg font-bold mb-2'>Uploaded by: {model.user.name}</div>
 				</div>
 			)}
 		</NavLink>
