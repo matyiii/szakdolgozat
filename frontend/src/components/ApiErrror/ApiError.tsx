@@ -9,12 +9,8 @@ const ApiError = ({ message }: Props) => {
 	};
 
 	// Check if the message contains validation errors
-	const isValidationError = (
-		message: any,
-	): message is { validator_failed: { [key: string]: string[] } } => {
-		return (
-			message.validator_failed && typeof message.validator_failed === 'object'
-		);
+	const isValidationError = (message: any): message is { validator_failed: { [key: string]: string[] } } => {
+		return message.validator_failed && typeof message.validator_failed === 'object';
 	};
 
 	return (

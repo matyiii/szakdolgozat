@@ -66,7 +66,7 @@ const ForumComment = ({ comment, deleteComment, editComment }: Props) => {
 
 	return (
 		<div className='relative flex flex-row items-center rounded-lg border border-slate-200 mb-2 p-2'>
-			<div className='flex flex-col mx-2'>
+			<div className='flex flex-col mx-2 min-w-28'>
 				<div className='text-slate-600'>{comment?.user?.name}</div>
 				<div className='text-xs text-slate-500'>{datetime.date}</div>
 				<div className='text-xs text-slate-500'>{datetime.time}</div>
@@ -74,7 +74,7 @@ const ForumComment = ({ comment, deleteComment, editComment }: Props) => {
 			{isEditing ? (
 				<Input as='textarea' rows={2} onChange={(value: any) => setEditedText(value)} value={editedText} />
 			) : (
-				<div className='ml-8'>{comment.comment}</div>
+				<div className='ml-4'>{comment.comment}</div>
 			)}
 			{user.id === comment.user_id && (
 				<div className='flex flex-col ml-auto'>

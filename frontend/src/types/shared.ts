@@ -12,13 +12,16 @@ type UserType = {
 	name: string | null;
 	email: string | null;
 	token?: string | null;
+	models_count?: number;
+	created_at: string;
+	updated_at: string;
 };
 
 type CategoryType = {
 	id?: number;
 	name: string;
-	updated_at?: string;
 	created_at?: string;
+	updated_at?: string;
 };
 
 type ImageType = {

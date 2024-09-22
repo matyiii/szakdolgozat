@@ -70,7 +70,7 @@ class ThreeDModel extends BaseModel
 	{
 		return self::with(['user', 'category', 'images', 'files'])
 			->inRandomOrder()
-			->take(8)
+			->take(4)
 			->get();
 	}
 

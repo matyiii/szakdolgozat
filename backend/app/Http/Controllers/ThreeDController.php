@@ -6,6 +6,7 @@ use App\Models\ModelUserComment;
 use App\Models\ThreeDFile;
 use App\Models\ThreeDImage;
 use App\Models\ThreeDModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -19,7 +20,7 @@ class ThreeDController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'model_name' => 'required|string',
-			'category_id' => 'required|numeric', //exists
+			'category_id' => 'required|exists:App\Models\Category,id',
 			'is_highlighted' => 'sometimes|boolean',
 			'files' => 'required|array',
 			'files.*.blobFile' => 'required|file',
@@ -303,7 +304,11 @@ class ThreeDController extends Controller
 	public function discover()
 	{
 		$discoveredModels = ThreeDModel::getDiscoveredModels();
+		$discoveredUsers = User::getDiscoveredUsers();
 
-		return response()->json($discoveredModels);
+		return response()->json([
+			'models' => $discoveredModels,
+			'users' => $discoveredUsers
+		]);
 	}
 }
