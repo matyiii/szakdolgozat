@@ -21,6 +21,14 @@ class ForumSeeder extends Seeder
 				'name' => '3D Modeling',
 				'description' => 'Discussions about 3D modeling software, design techniques, and best practices.',
 			],
+			[
+				'name' => '3D Printing Techniques',
+				'description' => 'Explore advanced techniques for optimizing 3D printing processes and improving print quality.',
+			],
+			[
+				'name' => '3D Design Software',
+				'description' => 'A forum for discussing various 3D design software options, including reviews and recommendations.',
+			],
 		];
 
 		Forum::insert($forums);
