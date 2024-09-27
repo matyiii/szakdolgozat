@@ -11,6 +11,7 @@ const Search = React.lazy(() => import('@/pages/Search/Search'));
 const Forum = React.lazy(() => import('@/pages/Forum/Forum'));
 const Topics = React.lazy(() => import('@/pages/Forum/Topics'));
 const Comments = React.lazy(() => import('@/pages/Forum/Comments'));
+const OAuth = React.lazy(() => import('@/pages/OAuth/OAuth'));
 
 export const routes: RouteType[] = [
 	{
@@ -78,5 +79,11 @@ export const routes: RouteType[] = [
 		exact: true,
 		component: Comments,
 		isPrivate: true,
+	},
+	{
+		path: '/oauth',
+		exact: true,
+		component: OAuth,
+		isPrivate: false,
 	},
 ];

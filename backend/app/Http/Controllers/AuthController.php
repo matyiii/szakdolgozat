@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -94,5 +97,96 @@ class AuthController extends Controller
 			'session' => config('session'),
 			'auth' => config('auth')
 		]);
+	}
+
+	public function redirectToGoogle()
+	{
+		return Socialite::driver('google')
+			->stateless()
+			->redirectUrl(env('GOOGLE_REDIRECT_URI'))
+			->redirect()
+			->getTargetUrl();
+	}
+
+	public function handleGoogleCallback()
+	{
+		dd(Socialite::driver('google')->stateless()->user());
+		try {
+			$googleUser = Socialite::driver('google')->stateless()->user();
+			$user = User::where('email', $googleUser->email)->first();
+
+			if (!$user) {
+				$user = User::create([
+					'name' => $googleUser->name,
+					'email' => $googleUser->email,
+					'google_id' => $googleUser->id,
+					'password' => null,
+				]);
+			}
+
+			$token = $user->createToken('auth_token')->plainTextToken;
+
+			return response()->json([
+				'user' => [
+					'id' => $user->id,
+					'name' => $user->name,
+					'email' => $user->email,
+					'token' => $token,
+				]
+			]);
+		} catch (Exception $e) {
+			Log::error('Google authentication error: ' . $e->getMessage());
+			return response()->json([
+				'error' => 'Google authentication failed',
+				'exception' => $e->getMessage()
+			], 500);
+		}
+	}
+
+	public function redirectToGithub()
+	{
+		return Socialite::driver('github')
+			->stateless()
+			->redirect()
+			->getTargetUrl();
+	}
+
+	public function handleGithubCallback()
+	{
+		//dd(Socialite::driver('github')->stateless()->user());
+		try {
+			$githubUser = Socialite::driver('github')->stateless()->user();
+			//dd($githubUser, $githubUser->nickname, $githubUser->email, $githubUser->id);
+			$user = User::where('email', $githubUser->email)->first();
+
+			if (!$user) {
+				$user = User::create([
+					'name' => $githubUser->nickname,
+					'email' => $githubUser->email,
+					'github_id' => $githubUser->id,
+					'password' => null,
+				]);
+			}
+
+			$token = $user->createToken('auth_token')->plainTextToken;
+
+			return response()->json([
+				'oauth_type' => 'github',
+				'user' => [
+					'id' => $user->id,
+					'name' => $user->name,
+					'email' => $user->email,
+					'created_at' => $user->created_at,
+					'updated_at' => $user->updated_at,
+					'token' => $token,
+				]
+			]);
+		} catch (Exception $e) {
+			Log::error('Githun authentication error: ' . $e->getMessage());
+			return response()->json([
+				'error' => 'Githun authentication failed',
+				'exception' => $e->getMessage()
+			], 500);
+		}
 	}
 }

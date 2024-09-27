@@ -3,20 +3,45 @@ import DataService from '@/service/DataService';
 import { SET_USER } from '@/store/auth/authSlice';
 import { fetchCategories } from '@/store/site/siteSlice';
 import { store } from '@/store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, ButtonToolbar, Form, Panel } from 'rsuite';
+import githubMark from '@/assets/github-mark.svg';
+import googleLogo from '@/assets/googe_logo.svg';
 
 const Login = () => {
 	/* Hooks */
 	const navigate = useNavigate();
 
 	/* State */
+	const [googleLoginUrl, setGoogleLoginUrl] = useState(null);
+	const [githubLoginUrl, setGithubLoginUrl] = useState(null);
 	const [payload, setPayload] = useState<LoginPayload>({
 		email: 'admin@admin.com',
 		password: 'password123',
 	});
+
+	/* Effects */
+	useEffect(() => {
+		DataService.auth
+			.googleLogin()
+			.then((res) => {
+				console.log(res.data);
+				setGoogleLoginUrl(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+		DataService.auth
+			.githubLogin()
+			.then((res) => {
+				console.log(res.data);
+				setGithubLoginUrl(res.data);
+			})
+			.catch((err) => console.log(err));
+	}, []);
 
 	/* Functions */
 	const handleInputChange = (value: any, e: any) => {
@@ -69,6 +94,27 @@ const Login = () => {
 							Sign in
 						</Button>
 					</ButtonToolbar>
+					<div className='my-4'>
+						{githubLoginUrl != null && (
+							<a
+								href={githubLoginUrl}
+								className='flex w-full items-center justify-center px-6 py-2 mb-2 text-white bg-gray-500 hover:bg-gray-400 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out'
+							>
+								<img src={githubMark} alt='GitHub' className='w-5 h-5 mr-2' />
+								GitHub Sign In
+							</a>
+						)}
+
+						{googleLoginUrl != null && (
+							<a
+								href={googleLoginUrl}
+								className='flex w-full items-center justify-center px-6 py-2 mt-2 text-white bg-blue-500 hover:bg-blue-400 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out'
+							>
+								<img src={googleLogo} alt='Google' className='w-5 h-5 mr-2' />
+								Google Sign In
+							</a>
+						)}
+					</div>
 				</Form.Group>
 			</Form>
 		</Panel>

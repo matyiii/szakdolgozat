@@ -20,4 +20,16 @@ export const AuthRequests = {
 	logout: () => {
 		return Api.post('/logout');
 	},
+
+	googleLogin: () => {
+		return Api.get('/auth/google');
+	},
+
+	githubLogin: () => {
+		return Api.get('/auth/github');
+	},
+
+	githubCallback: (search: string) => {
+		return Api.get(`/auth/github/callback${search}`);
+	},
 };

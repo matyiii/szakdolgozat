@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+/* Google OAuth */
+Route::get('auth/google', [AuthController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
+/* Github OAuth */
+Route::get('auth/github', [AuthController::class, 'redirectToGithub']);
+Route::get('auth/github/callback', [AuthController::class, 'handleGithubCallback']);
+
 /* Public APIs */
 Route::get('/3d/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
 
