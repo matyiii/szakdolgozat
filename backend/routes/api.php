@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	/* Site */
 	Route::get('/categories', [SiteController::class, 'getCategories']);
 	Route::get('/search', [SiteController::class, 'search']);
+	Route::get('/user/{user_id}', [SiteController::class, 'getUserById']);
 
 	/* ThreeD */
 	Route::prefix('3d')->group(function () {

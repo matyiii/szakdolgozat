@@ -59,7 +59,7 @@ const Header = () => {
 						</Nav>
 						<Nav.Menu title={user.name}>
 							<Nav.Item as='div'>
-								<NavLink to={`profile/${user.name}`}>Profile</NavLink>
+								<NavLink to={`profile/${user.id}`}>Profile</NavLink>
 							</Nav.Item>
 							<Nav.Item onClick={handleLogout}>Logout</Nav.Item>
 						</Nav.Menu>

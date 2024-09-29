@@ -51,7 +51,7 @@ export const routes: RouteType[] = [
 		isPrivate: true,
 	},
 	{
-		path: '/profile/:username',
+		path: '/profile/:user_id',
 		exact: true,
 		component: Profile,
 		isPrivate: true,

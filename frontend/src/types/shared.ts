@@ -13,6 +13,7 @@ type UserType = {
 	email: string | null;
 	token?: string | null;
 	models_count?: number;
+	models?: ThreeDModelType[];
 	created_at: string;
 	updated_at: string;
 };

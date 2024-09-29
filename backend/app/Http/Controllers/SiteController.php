@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\ThreeDModel;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
 {
@@ -33,5 +35,34 @@ class SiteController extends Controller
 			->get();
 
 		return response()->json($filteredModels);
+	}
+
+	public function getUserById($user_id)
+	{
+		$validator = Validator::make(['user_id' => $user_id], [
+			'user_id' => 'required|exists:App\Models\User,id',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors()
+			], 422);
+		}
+
+		$user = User::with([
+			'models',
+			'models.category',
+			'models.images',
+		])->find($user_id);
+
+		if (!$user) {
+			return response()->json([
+				'error' => 'User not found'
+			], 404);
+		}
+
+		return response()->json([
+			'user' => $user,
+		]);
 	}
 }

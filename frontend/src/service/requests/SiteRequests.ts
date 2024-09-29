@@ -8,4 +8,8 @@ export const SiteRequests = {
 	search: (query: string) => {
 		return Api.get(`/search${query}`);
 	},
+
+	getUser: (userId: number) => {
+		return Api.get(`/user/${userId}`);
+	},
 };
