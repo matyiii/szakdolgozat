@@ -75,7 +75,7 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 			</p>
 			<div className='text-sm text-gray-600 mb-4'>
 				<p className='font-medium'>Uploaded by:</p>
-				<NavLink to={`/profile/${model?.user?.name}`} className='text-blue-500 underline'>
+				<NavLink to={`/profile/${model?.user?.id}`} className='text-blue-500 underline'>
 					{model?.user?.name}
 				</NavLink>
 			</div>

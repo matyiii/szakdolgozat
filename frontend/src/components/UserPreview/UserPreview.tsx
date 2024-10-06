@@ -7,7 +7,7 @@ type Props = {
 const UserPreview = ({ user }: Props) => {
 	return (
 		<NavLink
-			to={`/users/${user.id}`}
+			to={`/profile/${user.id}`}
 			className='relative bg-slate-200 m-2 rounded-lg shadow-lg hover:bg-slate-300 transition duration-300 ease-in-out hover:cursor-pointer flex flex-col items-center'
 		>
 			<div className='flex flex-col items-center p-4'>
