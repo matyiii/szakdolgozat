@@ -11,7 +11,7 @@ type Props = {
 const STLViewer = ({ fileId }: Props) => {
 	return (
 		<Canvas
-			camera={{ position: [0, 0, 5], fov: 75 }}
+			camera={{ position: [0, 0, 5], fov: 75, near: 0.01, far: 10000 }}
 			gl={{ antialias: true }}
 			onCreated={({ gl, scene }) => {
 				scene.background = new THREE.Color(0x808080);
