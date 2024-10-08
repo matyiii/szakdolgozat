@@ -14,8 +14,14 @@ type UserType = {
 	token?: string | null;
 	models_count?: number;
 	models?: ThreeDModelType[];
-	created_at: string;
-	updated_at: string;
+	role: RoleType | null;
+	created_at?: string;
+	updated_at?: string;
+};
+
+type RoleType = {
+	id: number;
+	name: string;
 };
 
 type CategoryType = {

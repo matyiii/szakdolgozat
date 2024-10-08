@@ -10,7 +10,13 @@ const storedUser: UserType | null = storedUserString
 	: null;
 
 const initialState: AuthState = {
-	user: storedUser || { id: null, name: null, email: null, token: null },
+	user: storedUser || {
+		id: null,
+		name: null,
+		email: null,
+		token: null,
+		role: null,
+	},
 };
 
 export const authSlice = createSlice({

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DummyController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ThreeDController;
@@ -72,6 +71,4 @@ Route::middleware('auth:sanctum')->group(function () {
 			Route::post('/edit', [ForumController::class, 'editComment']);
 		});
 	});
-
-	Route::post('test', [DummyController::class, 'test']);
 });

@@ -23,6 +23,7 @@ class User extends Authenticatable
 		'password',
 		'google_id',
 		'github_id',
+		'role_id',
 	];
 
 	/**
@@ -56,6 +57,11 @@ class User extends Authenticatable
 	public function models()
 	{
 		return $this->hasMany(ThreeDModel::class, 'user_id', 'id');
+	}
+
+	public function role()
+	{
+		return $this->hasOne(Role::class, 'id', 'role_id');
 	}
 
 	/* Functions */

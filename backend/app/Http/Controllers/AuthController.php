@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -38,6 +39,8 @@ class AuthController extends Controller
 
 		$token = $user->createToken('auth_token')->plainTextToken;
 
+		$user->load(['role']);
+
 		return response()->json([
 			'user' => [
 				'id' => $user->id,
@@ -46,6 +49,7 @@ class AuthController extends Controller
 				'created_at' => $user->created_at,
 				'updated_at' => $user->updated_at,
 				'token' => $token,
+				'role' => $user->role,
 			]
 		]);
 	}
@@ -75,6 +79,8 @@ class AuthController extends Controller
 
 		$token = $user->createToken('auth_token')->plainTextToken;
 
+		$user->load(['role']);
+
 		return response()->json([
 			'user' => [
 				'id' => $user->id,
@@ -83,6 +89,7 @@ class AuthController extends Controller
 				'created_at' => $user->created_at,
 				'updated_at' => $user->updated_at,
 				'token' => $token,
+				'role' => $user->role,
 			]
 		]);
 	}
@@ -115,6 +122,7 @@ class AuthController extends Controller
 		try {
 			$googleUser = Socialite::driver('google')->stateless()->user();
 			$user = User::where('email', $googleUser->email)->first();
+			$visitorRole = Role::where('name', 'Visitor')->first();
 
 			if (!$user) {
 				$user = User::create([
@@ -122,10 +130,13 @@ class AuthController extends Controller
 					'email' => $googleUser->email,
 					'google_id' => $googleUser->id,
 					'password' => null,
+					'role_id' => $visitorRole->id,
 				]);
 			}
 
 			$token = $user->createToken('auth_token')->plainTextToken;
+
+			$user->load(['role']);
 
 			return response()->json([
 				'user' => [
@@ -133,6 +144,7 @@ class AuthController extends Controller
 					'name' => $user->name,
 					'email' => $user->email,
 					'token' => $token,
+					'role' => $user->role,
 				]
 			]);
 		} catch (Exception $e) {
@@ -154,11 +166,10 @@ class AuthController extends Controller
 
 	public function handleGithubCallback()
 	{
-		//dd(Socialite::driver('github')->stateless()->user());
 		try {
 			$githubUser = Socialite::driver('github')->stateless()->user();
-			//dd($githubUser, $githubUser->nickname, $githubUser->email, $githubUser->id);
 			$user = User::where('email', $githubUser->email)->first();
+			$visitorRole = Role::where('name', 'Visitor')->first();
 
 			if (!$user) {
 				$user = User::create([
@@ -166,10 +177,14 @@ class AuthController extends Controller
 					'email' => $githubUser->email,
 					'github_id' => $githubUser->id,
 					'password' => null,
+					'role_id' => $visitorRole->id,
 				]);
 			}
 
 			$token = $user->createToken('auth_token')->plainTextToken;
+
+			$user->load(['role']);
+
 
 			return response()->json([
 				'oauth_type' => 'github',
@@ -180,12 +195,13 @@ class AuthController extends Controller
 					'created_at' => $user->created_at,
 					'updated_at' => $user->updated_at,
 					'token' => $token,
+					'role' => $user->role,
 				]
 			]);
 		} catch (Exception $e) {
 			Log::error('Githun authentication error: ' . $e->getMessage());
 			return response()->json([
-				'error' => 'Githun authentication failed',
+				'error' => 'Github authentication failed',
 				'exception' => $e->getMessage()
 			], 500);
 		}
