@@ -72,7 +72,7 @@ class ThreeDController extends Controller
 		}
 
 		return response()->json([
-			'message' => 'Files uploaded successfully',
+			'message' => 'Files uploaded successfully, awaiting approval.',
 			'model_id' => $threeDModel->id,
 		], 200);
 	}

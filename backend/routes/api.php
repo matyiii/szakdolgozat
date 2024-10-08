@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\SiteController;
@@ -70,5 +71,14 @@ Route::middleware('auth:sanctum')->group(function () {
 			Route::post('/delete', [ForumController::class, 'deleteComment']);
 			Route::post('/edit', [ForumController::class, 'editComment']);
 		});
+	});
+
+	/* Admin */
+	Route::group([
+		'prefix' => 'admin',
+		'middleware' => 'admin',
+	], function () {
+		Route::get('/models_in_review', [AdminController::class, 'getModelsInReview']);
+		Route::post('/approve_model', [AdminController::class, 'approveModel']);
 	});
 });

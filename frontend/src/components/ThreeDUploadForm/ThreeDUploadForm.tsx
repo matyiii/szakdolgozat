@@ -49,8 +49,6 @@ const ThreeDUploadForm = () => {
 	};
 
 	const handleSubmit = () => {
-		console.log(form);
-
 		const formData = new FormData();
 		formData.append('model_name', form.model_name);
 		formData.append('category_id', `${form.category_id}`);
@@ -70,7 +68,7 @@ const ThreeDUploadForm = () => {
 			.then((res) => {
 				const { message, model_id } = res.data;
 				toast.success(message, { duration: 3000 });
-				navigate(`/models/${model_id}`);
+				//navigate(`/models/${model_id}`);
 			})
 			.catch((err) => {
 				console.log(err);

@@ -38,7 +38,7 @@ const Profile = () => {
 							<strong>Email:</strong> {user.email}
 						</p>
 						<p>
-							<strong>Account Created:</strong> {new Date(user.created_at).toLocaleDateString()}
+							<strong>Account Created:</strong> {new Date(user?.created_at as string).toLocaleDateString()}
 						</p>
 					</div>
 

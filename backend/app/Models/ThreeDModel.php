@@ -13,6 +13,8 @@ class ThreeDModel extends BaseModel
 		'name',
 		'is_banned',
 		'is_highlighted',
+		'is_approved',
+		'approved_at',
 		'like_count',
 		'download_count',
 		'user_id',
@@ -54,7 +56,12 @@ class ThreeDModel extends BaseModel
 	public static function getHighlightedModels()
 	{
 		return self::with(['user', 'category', 'images', 'files'])
-			->where('is_highlighted', 1)
+			->where(
+				[
+					['is_highlighted', 1],
+					['is_approved', 1],
+				]
+			)
 			->get();
 	}
 
@@ -69,6 +76,7 @@ class ThreeDModel extends BaseModel
 	public static function getDiscoveredModels()
 	{
 		return self::with(['user', 'category', 'images', 'files'])
+			->where('is_approved', 1)
 			->inRandomOrder()
 			->take(4)
 			->get();

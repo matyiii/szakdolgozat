@@ -1,3 +1,4 @@
+import { AdminRequests } from './requests/AdminRequests';
 import { AuthRequests } from './requests/AuthRequests';
 import { DummyRequests } from './requests/DummyRequets';
 import { ForumRequests } from './requests/ForumRequests';
@@ -10,4 +11,5 @@ export default {
 	threeD: ThreeDRequest,
 	site: SiteRequests,
 	forum: ForumRequests,
+	admin: AdminRequests,
 };
