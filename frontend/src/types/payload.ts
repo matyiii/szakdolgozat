@@ -8,6 +8,7 @@ type RegisterPayload = {
 	email: string;
 	password: string;
 	password_confirmation: string;
+	is_privacy_ticked: boolean;
 };
 
 type LikePayload = {

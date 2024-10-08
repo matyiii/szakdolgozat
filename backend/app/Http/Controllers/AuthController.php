@@ -16,9 +16,10 @@ class AuthController extends Controller
 	public function register(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-			'name' => 'required|string|max:255|unique:App\Models\User,name',
+			'username' => 'required|string|max:255|unique:App\Models\User,name',
 			'email' => 'required|email|unique:App\Models\User,email',
-			'password' => ['required', 'confirmed'/*, Password::min(8)->mixedCase()->numbers()*/]
+			'password' => ['required', 'confirmed'/*, Password::min(8)->mixedCase()->numbers()*/],
+			'is_privacy_ticked' => 'required|accepted',
 		]);
 
 		if ($validator->fails()) {
@@ -30,7 +31,7 @@ class AuthController extends Controller
 		$validated = $validator->validated();
 
 		$user = User::create([
-			'name' => $validated['name'],
+			'name' => $validated['username'],
 			'email' => $validated['email'],
 			'password' => Hash::make($validated['password']),
 		]);

@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import DataService from '@/service/DataService';
 import { store } from '@/store/store';
 import { SET_USER } from '@/store/auth/authSlice';
-import { Button, ButtonToolbar, Form, Panel } from 'rsuite';
+import { Button, ButtonToolbar, Form, Panel, Checkbox } from 'rsuite';
 import toast from 'react-hot-toast';
 import ApiError from '@/components/ApiErrror/ApiError';
 
@@ -17,6 +17,7 @@ const Register = () => {
 		email: '',
 		password: '',
 		password_confirmation: '',
+		is_privacy_ticked: false,
 	});
 
 	/* Functions */
@@ -31,6 +32,11 @@ const Register = () => {
 	};
 
 	const handleSubmit = () => {
+		if (!payload.is_privacy_ticked) {
+			toast.error('You must accept the privacy policy to register.');
+			return;
+		}
+
 		console.log(payload);
 
 		DataService.auth
@@ -67,28 +73,15 @@ const Register = () => {
 			<Form className='p-2'>
 				<Form.Group controlId='username'>
 					<Form.ControlLabel>Username</Form.ControlLabel>
-					<Form.Control
-						name='username'
-						onChange={handleInputChange}
-						value={payload.username}
-					/>
+					<Form.Control name='username' onChange={handleInputChange} value={payload.username} />
 				</Form.Group>
 				<Form.Group controlId='email'>
 					<Form.ControlLabel>Email</Form.ControlLabel>
-					<Form.Control
-						name='email'
-						onChange={handleInputChange}
-						value={payload.email}
-					/>
+					<Form.Control name='email' onChange={handleInputChange} value={payload.email} />
 				</Form.Group>
 				<Form.Group controlId='password'>
 					<Form.ControlLabel>Password</Form.ControlLabel>
-					<Form.Control
-						name='password'
-						type='password'
-						onChange={handleInputChange}
-						value={payload.password}
-					/>
+					<Form.Control name='password' type='password' onChange={handleInputChange} value={payload.password} />
 				</Form.Group>
 				<Form.Group controlId='password_confirmation'>
 					<Form.ControlLabel>Confirm Password</Form.ControlLabel>
@@ -99,12 +92,30 @@ const Register = () => {
 						value={payload.password_confirmation}
 					/>
 				</Form.Group>
+				{/* Privacy policy checkbox */}
+				<Form.Group controlId='is_privacy_ticked'>
+					<Checkbox
+						checked={payload.is_privacy_ticked}
+						name='is_privacy_ticked'
+						onChange={(_, check) => {
+							setPayload((prevValue) => {
+								return {
+									...prevValue,
+									is_privacy_ticked: Boolean(check),
+								};
+							});
+						}}
+					>
+						I accept the{' '}
+						<a href='/docs/privacy_policy.pdf' target='_blank' rel='noopener noreferrer'>
+							Privacy Policy
+						</a>
+					</Checkbox>
+				</Form.Group>
 				<Form.Group>
 					<ButtonToolbar>
 						<NavLink to='/login'>
-							<Button appearance='link'>
-								Already have an account? Sign in
-							</Button>
+							<Button appearance='link'>Already have an account? Sign in</Button>
 						</NavLink>
 						<Button appearance='primary' onClick={handleSubmit}>
 							Sign up

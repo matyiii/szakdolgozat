@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 const Copyright = () => {
 	return (
-		<div className='my-3'>
+		<div className='mt-1 mb-3'>
 			<p className='text-gray-500 text-center'>
 				Copyright ©{' '}
 				<NavLink to='/' className='underline'>

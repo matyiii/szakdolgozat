@@ -9,12 +9,7 @@ export const AuthRequests = {
 	},
 
 	register: (payload: RegisterPayload) => {
-		return Api.post('/register', {
-			name: payload.username,
-			email: payload.email,
-			password: payload.password,
-			password_confirmation: payload.password_confirmation,
-		});
+		return Api.post('/register', payload);
 	},
 
 	logout: () => {
