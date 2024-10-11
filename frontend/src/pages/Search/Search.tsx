@@ -27,7 +27,7 @@ const Search = () => {
 	}, [search]);
 
 	return (
-		<div className='p-4'>
+		<div className='p-4 bg-white rounded-xl shadow-lg'>
 			<h1 className='text-2xl font-bold text-center mb-4'>{`Search Results for "${searchQuery}"`}</h1>
 			{models.length === 0 ? (
 				<p className='text-center text-gray-500'>No results found. Please try a different search.</p>

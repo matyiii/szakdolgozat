@@ -11,7 +11,7 @@ const Preview = ({ model }: Props) => {
 	return (
 		<NavLink
 			to={`/models/${model.id}`}
-			className='relative bg-slate-200 m-2 rounded-lg shadow-lg hover:bg-slate-300 transition duration-300 ease-in-out hover:cursor-pointer flex flex-col items-center'
+			className='relative hover:shadow-lg bg-slate-200 m-2 rounded-lg shadow-lg hover:bg-slate-300 transition duration-300 ease-in-out hover:cursor-pointer flex flex-col items-center'
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>

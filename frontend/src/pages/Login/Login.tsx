@@ -72,7 +72,7 @@ const Login = () => {
 	};
 
 	return (
-		<Panel bordered className='flex justify-center'>
+		<Panel bordered className='flex justify-center bg-white rounded-lg shadow-lg'>
 			<h1 className='text-2xl font-medium px-2 pb-2'>Log in</h1>
 			<Form className='p-2'>
 				<Form.Group controlId='email'>

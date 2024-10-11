@@ -29,7 +29,9 @@ const Header = () => {
 			{user.id ? (
 				<Navbar className='flex justify-between items-center'>
 					<Navbar.Brand as='div'>
-						<NavLink to='/'>PrintIT</NavLink>
+						<NavLink to='/' className='font-bold'>
+							PrintIT
+						</NavLink>
 					</Navbar.Brand>
 					<Nav className='flex-grow flex justify-center'>
 						<Nav.Item as='div'>
