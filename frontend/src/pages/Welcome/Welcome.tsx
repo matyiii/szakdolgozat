@@ -2,7 +2,7 @@ import DataService from '@/service/DataService';
 import useUser from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
 import Preview from '@/components/ThreeDModel/Preview/Preview';
-import PrintItBackground from '@/assets/printit_background.webp';
+import PrintItBackground from '@/assets/printit_background_2.png';
 
 const Welcome = () => {
 	const { user } = useUser();
@@ -22,7 +22,12 @@ const Welcome = () => {
 
 	return (
 		<div className='flex flex-col flex-1 p-6'>
-			<img src={PrintItBackground} className='w-full max-h-[20rem] h-auto object-cover rounded-lg shadow-md mb-6' alt='Background' />
+			<img
+				src={PrintItBackground}
+				className='w-full max-h-[20rem] h-auto object-cover rounded-lg shadow-md mb-6'
+				style={{ objectPosition: '0 60%' }}
+				alt='Background'
+			/>
 			<h2 className='text-3xl font-semibold text-gray-800 mb-4 text-center'>Highlighted Models</h2>
 			<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
 				{models?.map((model) => (

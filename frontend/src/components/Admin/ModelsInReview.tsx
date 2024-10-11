@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { Button } from 'rsuite';
 
 type Props = {
 	models: ThreeDModelType[];
@@ -28,7 +29,9 @@ const ModelsInReview = ({ models }: Props) => {
 									<td className='py-2 px-4'>{model.user.name}</td>
 									<td className='py-2 px-4'>{model.created_at}</td>
 									<td className='py-2 px-4'>
-										<NavLink to={`/models/${model.id}`}>Details</NavLink>
+										<NavLink to={`/models/${model.id}`}>
+											<Button appearance='primary'>Details</Button>
+										</NavLink>
 									</td>
 								</tr>
 							))}
