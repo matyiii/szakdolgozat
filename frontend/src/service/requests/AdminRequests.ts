@@ -5,7 +5,7 @@ export const AdminRequests = {
 		return Api.get('/admin/models_in_review');
 	},
 
-	approveModel: () => {
-		return Api.post('/admin/approve_model');
+	approveModel: (payload: ApproveModelPayload) => {
+		return Api.post('/admin/approve_model', payload);
 	},
 };

@@ -22,6 +22,10 @@ class RoleSeeder extends Seeder
 			],
 		];
 
-		Role::insert($roles);
+		foreach ($roles as $r) {
+			Role::create([
+				'name' => $r['name'],
+			]);
+		}
 	}
 }

@@ -70,6 +70,13 @@ class TopicSeeder extends Seeder
 			],
 		];
 
-		Topic::insert($topics);
+		foreach ($topics as $t) {
+			Topic::create([
+				'forum_id' => $t['forum_id'],
+				'user_id' => $t['user_id'],
+				'title' => $t['title'],
+				'description' => $t['description'],
+			]);
+		}
 	}
 }

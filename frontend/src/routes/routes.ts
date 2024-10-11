@@ -12,6 +12,7 @@ const Forum = React.lazy(() => import('@/pages/Forum/Forum'));
 const Topics = React.lazy(() => import('@/pages/Forum/Topics'));
 const Comments = React.lazy(() => import('@/pages/Forum/Comments'));
 const OAuth = React.lazy(() => import('@/pages/OAuth/OAuth'));
+const AdminDashboard = React.lazy(() => import('@/pages/Admin/Dashboard'));
 
 export const routes: RouteType[] = [
 	{
@@ -85,5 +86,12 @@ export const routes: RouteType[] = [
 		exact: true,
 		component: OAuth,
 		isPrivate: false,
+	},
+	{
+		path: '/admin',
+		exact: true,
+		component: AdminDashboard,
+		isPrivate: true,
+		isAdmin: true,
 	},
 ];

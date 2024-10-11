@@ -3,8 +3,7 @@ type RouteType = {
 	exact?: boolean;
 	component: React.FC | any;
 	isPrivate: boolean;
-	roles?: string[];
-	type?: string;
+	isAdmin?: boolean;
 };
 
 type UserType = {

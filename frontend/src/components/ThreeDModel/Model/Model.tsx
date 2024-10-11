@@ -6,8 +6,8 @@ import { Carousel } from 'rsuite';
 
 type Props = {
 	model: ThreeDModelType;
-	updateModel: any;
-	onDownload: any;
+	updateModel?: any;
+	onDownload?: any;
 };
 
 const Model = ({ model, updateModel, onDownload }: Props) => {

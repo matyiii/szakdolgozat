@@ -50,3 +50,8 @@ type EditForumCommentPayload = {
 	comment_id: number;
 	new_comment: string;
 };
+
+type ApproveModelPayload = {
+	model_id: number;
+	is_approved: boolean;
+};

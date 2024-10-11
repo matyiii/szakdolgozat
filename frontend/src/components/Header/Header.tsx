@@ -1,18 +1,15 @@
 import DataService from '@/service/DataService';
-import { selectUser } from '@/store/auth/authSelector';
 import { SET_USER } from '@/store/auth/authSlice';
-import { useAppSelector } from '@/store/hooks';
 import { store } from '@/store/store';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Button } from 'rsuite';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import useUser from '@/hooks/useUser';
 
 const Header = () => {
 	/*Hooks */
 	const navigate = useNavigate();
-
-	/* Selector */
-	const user = useAppSelector(selectUser);
+	const { user, isAdmin } = useUser();
 
 	/* Functions */
 	const handleLogout = () => {
@@ -61,6 +58,11 @@ const Header = () => {
 							<Nav.Item as='div'>
 								<NavLink to={`profile/${user.id}`}>Profile</NavLink>
 							</Nav.Item>
+							{isAdmin && (
+								<Nav.Item as='div'>
+									<NavLink to='/admin'>Admin</NavLink>
+								</Nav.Item>
+							)}
 							<Nav.Item onClick={handleLogout}>Logout</Nav.Item>
 						</Nav.Menu>
 					</Nav>

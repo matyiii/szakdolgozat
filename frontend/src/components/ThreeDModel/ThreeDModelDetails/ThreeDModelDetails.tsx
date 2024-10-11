@@ -1,7 +1,8 @@
 import ApiError from '@/components/ApiErrror/ApiError';
+import useUser from '@/hooks/useUser';
 import DataService from '@/service/DataService';
 import toast from 'react-hot-toast';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from 'rsuite';
 
 type Props = {
@@ -11,6 +12,10 @@ type Props = {
 };
 
 const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
+	/* Hooks */
+	const { isAdmin } = useUser();
+	const navigate = useNavigate();
+
 	/* Functions */
 	const handleLike = () => {
 		DataService.threeD
@@ -61,6 +66,20 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 			});
 	};
 
+	const approveHandler = (modelId: number, isApproved: boolean) => {
+		const payload: ApproveModelPayload = {
+			model_id: modelId,
+			is_approved: isApproved,
+		};
+		DataService.admin
+			.approveModel(payload)
+			.then((res) => {
+				navigate(-1);
+				toast.success(res.data.message);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	return (
 		<div className='flex flex-col bg-white border border-gray-200 shadow-md p-2 rounded-lg'>
 			<h1 className='text-lg font-semibold text-gray-800 mb-4'>Details</h1>
@@ -81,13 +100,27 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 			</div>
 			<p className='text-sm text-gray-600 mb-2'>{`Like count: ${model?.like_count}`}</p>
 			<p className='text-sm text-gray-600 mb-4'>{`Download count: ${model?.download_count}`}</p>
-			<div className='flex space-x-2'>
-				<Button appearance='primary' className='bg-blue-500 hover:bg-blue-600' onClick={handleLike}>
-					{`${model?.is_liked ? 'Unlike' : 'Like'}`}
-				</Button>
-				<Button appearance='ghost' className='bg-gray-100 hover:bg-gray-200' onClick={downloadFiles}>
-					Download Model
-				</Button>
+
+			<div className='flex flex-col gap-1'>
+				<div className='flex space-x-1'>
+					<Button appearance='primary' className='w-full bg-blue-500 hover:bg-blue-600' onClick={handleLike}>
+						{`${model?.is_liked ? 'Unlike' : 'Like'}`}
+					</Button>
+					<Button appearance='ghost' className='w-full bg-gray-100 hover:bg-gray-200' onClick={downloadFiles}>
+						Download Model
+					</Button>
+				</div>
+
+				{isAdmin && !model.approved_at && !model.is_approved && (
+					<div className='flex space-x-1'>
+						<Button appearance='primary' className='w-full' color='green' onClick={() => approveHandler(model.id, true)}>
+							Approve
+						</Button>
+						<Button appearance='primary' className='w-full' color='red' onClick={() => approveHandler(model.id, false)}>
+							Deny
+						</Button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

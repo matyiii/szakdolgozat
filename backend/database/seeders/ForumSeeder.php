@@ -31,6 +31,11 @@ class ForumSeeder extends Seeder
 			],
 		];
 
-		Forum::insert($forums);
+		foreach ($forums as $f) {
+			Forum::create([
+				'name' => $f['name'],
+				'description' => $f['description'],
+			]);
+		}
 	}
 }

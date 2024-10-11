@@ -18,7 +18,7 @@ return new class extends Migration
 			$table->string('name');
 			$table->boolean('is_banned')->nullable();
 			$table->boolean('is_highlighted')->default(0);
-			$table->boolean('is_approved')->default(0);
+			$table->boolean('is_approved')->nullable();
 			$table->timestamp('approved_at')->nullable();
 			$table->unsignedInteger('like_count')->default(0);
 			$table->unsignedInteger('download_count')->default(0);

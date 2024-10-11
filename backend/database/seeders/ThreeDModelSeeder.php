@@ -56,7 +56,6 @@ class ThreeDModelSeeder extends Seeder
 				'name' => 'Torus',
 				'is_banned' => 0,
 				'is_highlighted' => 1,
-				'is_approved' => 0,
 				'like_count' => 0,
 				'download_count' => 0,
 				'category_id' => 3,
@@ -67,8 +66,16 @@ class ThreeDModelSeeder extends Seeder
 			if (!isset($model['user_id'])) {
 				$model['user_id'] = User::inRandomOrder()->first()->id;
 			}
-		}
 
-		ThreeDModel::insert($models);
+			ThreeDModel::create([
+				'name' => $model['name'],
+				'is_banned' => $model['is_banned'],
+				'is_highlighted' => $model['is_highlighted'],
+				'is_approved' => $model['is_approved'] ?? null,
+				'like_count' => $model['like_count'],
+				'user_id' => $model['user_id'],
+				'category_id' => $model['category_id'],
+			]);
+		}
 	}
 }

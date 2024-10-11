@@ -4,11 +4,12 @@ type Props = {
 	children: React.ReactNode;
 	open: boolean;
 	onClose: () => void;
+	className?: string;
 };
 
-const CustomModal = ({ children, open, onClose }: Props) => {
+const CustomModal = ({ children, open, onClose, className }: Props) => {
 	return (
-		<Modal open={open} onClose={onClose}>
+		<Modal open={open} onClose={onClose} className={className}>
 			<Modal.Header />
 			<Modal.Body>{children}</Modal.Body>
 		</Modal>
