@@ -55,3 +55,7 @@ type ApproveModelPayload = {
 	model_id: number;
 	is_approved: boolean;
 };
+
+type DeleteModelPayload = {
+	model_id: number;
+};

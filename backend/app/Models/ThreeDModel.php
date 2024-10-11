@@ -11,7 +11,6 @@ class ThreeDModel extends BaseModel
 
 	protected $fillable = [
 		'name',
-		'is_banned',
 		'is_highlighted',
 		'is_approved',
 		'approved_at',

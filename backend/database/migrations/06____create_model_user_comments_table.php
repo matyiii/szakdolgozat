@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('model_user_comments', function (Blueprint $table) {
             $table->id();
-			$table->foreignIdFor(User::class)->constrained();
-			$table->foreignIdFor(ThreeDModel::class)->constrained();
+			$table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+			$table->foreignIdFor(ThreeDModel::class)->constrained()->onDelete('cascade');
 			$table->text('text');
 			$table->softDeletes();
             $table->timestamps();

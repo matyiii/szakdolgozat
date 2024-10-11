@@ -80,6 +80,23 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 			.catch((err) => console.log(err));
 	};
 
+	const deleteModelHandler = (modelId: number) => {
+		const payload: DeleteModelPayload = {
+			model_id: modelId,
+		};
+
+		DataService.admin
+			.deleteModel(payload)
+			.then((res) => {
+				console.log(res);
+				navigate(-1);
+				toast.success(res.data.message);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
 		<div className='flex flex-col bg-white border border-gray-200 shadow-md p-2 rounded-lg'>
 			<h1 className='text-lg font-semibold text-gray-800 mb-4'>Details</h1>
@@ -111,6 +128,7 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 					</Button>
 				</div>
 
+				{/* Approve Model*/}
 				{isAdmin && !model.approved_at && !model.is_approved && (
 					<div className='flex space-x-1'>
 						<Button appearance='primary' className='w-full' color='green' onClick={() => approveHandler(model.id, true)}>
@@ -118,6 +136,15 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 						</Button>
 						<Button appearance='primary' className='w-full' color='red' onClick={() => approveHandler(model.id, false)}>
 							Deny
+						</Button>
+					</div>
+				)}
+
+				{/* Delete Model */}
+				{isAdmin && model.approved_at && (
+					<div className='flex'>
+						<Button appearance='primary' className='w-full' color='red' onClick={() => deleteModelHandler(model.id)}>
+							Delete
 						</Button>
 					</div>
 				)}

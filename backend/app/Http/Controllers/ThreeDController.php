@@ -38,7 +38,6 @@ class ThreeDController extends Controller
 
 		$threeDModel = ThreeDModel::create([
 			'name' => $validated['model_name'],
-			'is_banned' => false,
 			'is_highlighted' => $validated['is_highlighted'] ?? false,
 			'like_count' => 0,
 			'user_id' => $request->user()->id,

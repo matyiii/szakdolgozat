@@ -80,5 +80,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	], function () {
 		Route::get('/models_in_review', [AdminController::class, 'getModelsInReview']);
 		Route::post('/approve_model', [AdminController::class, 'approveModel']);
+		Route::post('/delete_model', [AdminController::class, 'deleteModel']);
 	});
 });

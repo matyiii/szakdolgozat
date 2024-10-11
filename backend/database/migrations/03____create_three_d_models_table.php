@@ -16,7 +16,6 @@ return new class extends Migration
 		Schema::create('three_d_models', function (Blueprint $table) {
 			$table->id();
 			$table->string('name');
-			$table->boolean('is_banned')->nullable();
 			$table->boolean('is_highlighted')->default(0);
 			$table->boolean('is_approved')->nullable();
 			$table->timestamp('approved_at')->nullable();

@@ -53,7 +53,6 @@ type FileType = {
 type ThreeDModelType = {
 	id: number;
 	name: string;
-	is_banned: boolean;
 	is_highlighted: boolean;
 	is_approved: boolean;
 	approved_at?: string;

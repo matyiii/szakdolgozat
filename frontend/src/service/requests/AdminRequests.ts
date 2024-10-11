@@ -8,4 +8,8 @@ export const AdminRequests = {
 	approveModel: (payload: ApproveModelPayload) => {
 		return Api.post('/admin/approve_model', payload);
 	},
+
+	deleteModel: (payload: DeleteModelPayload) => {
+		return Api.post('/admin/delete_model', payload);
+	},
 };

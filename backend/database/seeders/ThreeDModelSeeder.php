@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\ThreeDModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +18,6 @@ class ThreeDModelSeeder extends Seeder
 		$models = [
 			[
 				'name' => 'AirTag Bike Saddle Holder',
-				'is_banned' => 0,
 				'is_highlighted' => 1,
 				'is_approved' => 1,
 				'like_count' => 0,
@@ -27,7 +27,6 @@ class ThreeDModelSeeder extends Seeder
 			],
 			[
 				'name' => 'Small Sphere',
-				'is_banned' => 0,
 				'is_highlighted' => 1,
 				'is_approved' => 1,
 				'like_count' => 0,
@@ -36,7 +35,6 @@ class ThreeDModelSeeder extends Seeder
 			],
 			[
 				'name' => 'Medium Cone',
-				'is_banned' => 0,
 				'is_highlighted' => 0,
 				'is_approved' => 1,
 				'like_count' => 0,
@@ -45,7 +43,6 @@ class ThreeDModelSeeder extends Seeder
 			],
 			[
 				'name' => 'Big Cube',
-				'is_banned' => 0,
 				'is_highlighted' => 1,
 				'is_approved' => 1,
 				'like_count' => 0,
@@ -54,7 +51,6 @@ class ThreeDModelSeeder extends Seeder
 			],
 			[
 				'name' => 'Torus',
-				'is_banned' => 0,
 				'is_highlighted' => 1,
 				'like_count' => 0,
 				'download_count' => 0,
@@ -69,9 +65,9 @@ class ThreeDModelSeeder extends Seeder
 
 			ThreeDModel::create([
 				'name' => $model['name'],
-				'is_banned' => $model['is_banned'],
 				'is_highlighted' => $model['is_highlighted'],
 				'is_approved' => $model['is_approved'] ?? null,
+				'approved_at' => (isset($model['is_approved']) ? Carbon::now() : null) ?: null,
 				'like_count' => $model['like_count'],
 				'user_id' => $model['user_id'],
 				'category_id' => $model['category_id'],

@@ -38,7 +38,7 @@ class AdminController extends Controller
 		$modelId = $validated['model_id'];
 		$isApproved = $validated['is_approved'];
 
-		$model = ThreeDModel::with(['user', 'category', 'images', 'files'])->find($modelId);
+		$model = ThreeDModel::find($modelId);
 
 		$model->update([
 			'is_approved' => $isApproved,
@@ -49,6 +49,42 @@ class AdminController extends Controller
 
 		return response()->json([
 			'message' => $message,
+		], 200);
+	}
+
+	public function deleteModel(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'model_id' => 'required|exists:App\Models\ThreeDModel,id',
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'validator_failed' => $validator->errors(),
+			], 422);
+		}
+
+		$validated = $validator->validated();
+		$modelId = $validated['model_id'];
+
+		$model = ThreeDModel::with(['files', 'images'])->find($modelId);
+
+		foreach ($model->files as $file) {
+			$file->delete();
+		}
+
+		foreach ($model->images as $image) {
+			$image->delete();
+		}
+
+		foreach ($model->comments as $comment) {
+			$comment->delete();
+		}
+
+		$model->delete();
+
+		return response()->json([
+			'message' => 'Model and related files deleted successfully',
 		], 200);
 	}
 }
