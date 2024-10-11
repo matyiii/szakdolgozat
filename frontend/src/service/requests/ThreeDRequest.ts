@@ -40,4 +40,8 @@ export const ThreeDRequest = {
 	download: (id: number) => {
 		return Api.get(`/3d/download?model_id=${id}`, { responseType: 'blob' });
 	},
+
+	getFilteredModels: (options: FilterOptions) => {
+		return Api.get('/3d/filtered_models', { params: options });
+	},
 };

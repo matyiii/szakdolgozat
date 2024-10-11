@@ -30,7 +30,9 @@ Route::get('auth/github', [AuthController::class, 'redirectToGithub']);
 Route::get('auth/github/callback', [AuthController::class, 'handleGithubCallback']);
 
 /* Public APIs */
+Route::get('/categories', [SiteController::class, 'getCategories']);
 Route::get('/3d/highlighted_models', [ThreeDController::class, 'getHighlightedModels']);
+Route::get('/3d/filtered_models', [ThreeDController::class, 'getFilteredModels']);
 
 Route::middleware('auth:sanctum')->group(function () {
 	/* Auth */
@@ -38,7 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/user', [AuthController::class, 'user']);
 
 	/* Site */
-	Route::get('/categories', [SiteController::class, 'getCategories']);
 	Route::get('/search', [SiteController::class, 'search']);
 	Route::get('/user/{user_id}', [SiteController::class, 'getUserById']);
 

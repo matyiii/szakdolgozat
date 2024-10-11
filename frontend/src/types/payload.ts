@@ -59,3 +59,8 @@ type ApproveModelPayload = {
 type DeleteModelPayload = {
 	model_id: number;
 };
+
+type FilterOptions = {
+	category_id?: string;
+	order_by?: string;
+};

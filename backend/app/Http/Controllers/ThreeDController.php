@@ -310,4 +310,38 @@ class ThreeDController extends Controller
 			'users' => $discoveredUsers
 		]);
 	}
+
+	public function getFilteredModels(Request $request)
+	{
+		$categoryId = $request->query('category_id');
+		$orderBy = $request->query('order_by');
+
+		$query = ThreeDModel::with(['user', 'category', 'images', 'files']);
+
+		if ($categoryId) {
+			$query->where('category_id', $categoryId);
+		}
+
+		switch ($orderBy) {
+			case 'newest':
+				$query->orderBy('created_at', 'desc');
+				break;
+			case 'oldest':
+				$query->orderBy('created_at', 'asc');
+				break;
+			case 'most_liked':
+				$query->orderBy('like_count', 'desc');
+				break;
+			case 'most_downloaded':
+				$query->orderBy('download_count', 'desc');
+				break;
+			default:
+				$query->orderBy('created_at', 'desc');
+				break;
+		}
+
+		$models = $query->get()->take(4);
+
+		return response()->json($models);
+	}
 }
