@@ -38,29 +38,23 @@ const Header = () => {
 					</Nav>
 					<Nav pullRight>
 						<Nav className='flex items-center'>
-							<Nav.Item as='div' className='py-0 m-4'>
-								<NavLink to='/discover' className='h-full content-center'>
-									Discover
-								</NavLink>
+							<Nav.Item as={NavLink} className='py-0 m-4' to='/discover'>
+								Discover
 							</Nav.Item>
-							<Nav.Item as='div' className='py-0 m-4'>
-								<NavLink to='/forum' className='h-full content-center'>
-									Forum
-								</NavLink>
+							<Nav.Item as={NavLink} className='py-0 m-4' to='/forum'>
+								Forum
 							</Nav.Item>
-							<Nav.Item as='div'>
-								<NavLink to='/upload'>
-									<Button appearance='primary'>Upload</Button>
-								</NavLink>
+							<Nav.Item as={NavLink} to='/upload'>
+								<Button appearance='primary'>Upload</Button>
 							</Nav.Item>
 						</Nav>
 						<Nav.Menu title={user.name}>
-							<Nav.Item as='div'>
-								<NavLink to={`profile/${user.id}`}>Profile</NavLink>
+							<Nav.Item as={NavLink} to={`profile/${user.id}`}>
+								Profile
 							</Nav.Item>
 							{isAdmin && (
-								<Nav.Item as='div'>
-									<NavLink to='/admin'>Admin</NavLink>
+								<Nav.Item as={NavLink} to='/admin'>
+									Admin
 								</Nav.Item>
 							)}
 							<Nav.Item onClick={handleLogout}>Logout</Nav.Item>
@@ -73,11 +67,11 @@ const Header = () => {
 						<NavLink to='/'>PrintIT</NavLink>
 					</Navbar.Brand>
 					<Nav pullRight>
-						<Nav.Item as='div'>
-							<NavLink to='/register'>Sign up</NavLink>
+						<Nav.Item as={NavLink} to='/register'>
+							Sign up
 						</Nav.Item>
-						<Nav.Item as='div'>
-							<NavLink to='/login'>Sign in</NavLink>
+						<Nav.Item as={NavLink} to='/login'>
+							Sign in
 						</Nav.Item>
 					</Nav>
 				</Navbar>
