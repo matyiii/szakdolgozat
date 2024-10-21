@@ -13,7 +13,7 @@ const UserPreview = ({ user }: Props) => {
 			<div className='flex flex-col items-center p-4'>
 				<div className='my-2 text-gray-600 text-lg font-semibold'>{user.name ?? 'Anonymous User'}</div>
 				<div className='text-gray-500'>{user.models_count ?? 0} Models Uploaded</div>
-				<div className='text-gray-500'>Joined: {new Date(user.created_at).toLocaleDateString()}</div>
+				<div className='text-gray-500'>Joined: {new Date(user.created_at as string).toLocaleDateString()}</div>
 			</div>
 		</NavLink>
 	);

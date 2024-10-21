@@ -1,27 +1,26 @@
-# Use the official Node.js image
-FROM node:16-alpine
+# Use a specific Node version
+FROM node:20
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package.json .
-COPY package-lock.json .
+# Remove cached node_modules and package-lock.json (if they exist in the build context)
+RUN rm -rf node_modules package-lock.json
 
-# Install dependencies
-RUN npm install
+# Copy package.json and lock file first to take advantage of Docker's cache
+COPY package*.json ./
 
-# Install Vite globally
-RUN npm install -g vite
+# Install dependencies (use --legacy-peer-deps if necessary)
+RUN npm install --legacy-peer-deps
 
-# Copy Vite configuration file
-COPY vite.config.ts .
-
-# Copy application files
+# Copy the rest of the application code
 COPY . .
 
-# Expose port
+# Build the app
+RUN npm run build
+
+# Expose port 3000
 EXPOSE 3000
 
-# Start React app
-CMD ["npm", "run", "dev"]
+# Run the app
+CMD ["npm", "run", "build"]
