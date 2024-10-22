@@ -1,26 +1,23 @@
-# Use a specific Node version
-FROM node:20
+# Node image
+FROM node:20-alpine
 
-# Set the working directory inside the container
+# Working Directory
 WORKDIR /app
 
-# Remove cached node_modules and package-lock.json (if they exist in the build context)
-RUN rm -rf node_modules package-lock.json
-
-# Copy package.json and lock file first to take advantage of Docker's cache
+# Copy package & package-lock
 COPY package*.json ./
 
-# Install dependencies (use --legacy-peer-deps if necessary)
-RUN npm install --legacy-peer-deps
+# Install dependencies
+RUN npm install
 
-# Copy the rest of the application code
+# Copy app files
 COPY . .
 
-# Build the app
-RUN npm run build
+# Expose port
+EXPOSE 5173
 
-# Expose port 3000
-EXPOSE 3000
+# File-watching
+ENV CHOKIDAR_USEPOLLING=true
 
-# Run the app
-CMD ["npm", "run", "build"]
+# Start
+CMD ["npm", "run", "start"]
