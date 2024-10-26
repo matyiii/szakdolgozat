@@ -68,6 +68,9 @@ class AdminController extends Controller
 		$modelId = $validated['model_id'];
 
 		$model = ThreeDModel::with(['files', 'images'])->find($modelId);
+		
+		$model->comments()->delete();
+		$model->likedByUsers()->detach();
 
 		foreach ($model->files as $file) {
 			$file->delete();
@@ -77,9 +80,6 @@ class AdminController extends Controller
 			$image->delete();
 		}
 
-		foreach ($model->comments as $comment) {
-			$comment->delete();
-		}
 
 		$model->delete();
 
