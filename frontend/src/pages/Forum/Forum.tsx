@@ -12,7 +12,6 @@ const Forum = () => {
 		DataService.forum
 			.getForums()
 			.then((res) => {
-				console.log(res);
 				setForums(res.data);
 			})
 			.catch((err) => {

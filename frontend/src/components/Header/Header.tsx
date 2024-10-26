@@ -16,7 +16,6 @@ const Header = () => {
 		DataService.auth
 			.logout()
 			.then((res) => {
-				console.log(res);
 				localStorage.removeItem('user');
 				store.dispatch(SET_USER(null));
 				navigate('/');
@@ -29,12 +28,12 @@ const Header = () => {
 			{user.id ? (
 				<Navbar className='flex justify-between items-center'>
 					<Navbar.Brand as='div'>
-						<NavLink to='/' className='font-bold'>
+						<NavLink to='/' className='font-bold text-slate-500 hover:text-slate-700 duration-200 ease-in-out'>
 							PrintIT
 						</NavLink>
 					</Navbar.Brand>
 					<Nav className='flex-grow flex justify-center'>
-						<Nav.Item as='div'>
+						<Nav.Item as='div' className='hover:!bg-transparent'>
 							<SearchBar />
 						</Nav.Item>
 					</Nav>

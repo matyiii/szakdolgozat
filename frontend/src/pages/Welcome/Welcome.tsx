@@ -21,7 +21,6 @@ const Welcome = () => {
 			DataService.threeD
 				.getHighlightedModels()
 				.then((res) => {
-					console.log(res);
 					setModels(res.data);
 				})
 				.catch((err) => {

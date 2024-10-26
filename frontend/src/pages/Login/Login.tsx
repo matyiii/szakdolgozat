@@ -18,8 +18,8 @@ const Login = () => {
 	const [googleLoginUrl, setGoogleLoginUrl] = useState(null);
 	const [githubLoginUrl, setGithubLoginUrl] = useState(null);
 	const [payload, setPayload] = useState<LoginPayload>({
-		email: 'admin@admin.com',
-		password: 'password123',
+		email: '',
+		password: '',
 	});
 
 	/* Effects */
@@ -105,7 +105,7 @@ const Login = () => {
 							</a>
 						)}
 
-						{googleLoginUrl != null && (
+						{/*{googleLoginUrl != null && (
 							<a
 								href={googleLoginUrl}
 								className='flex w-full items-center justify-center px-6 py-2 mt-2 text-white bg-blue-500 hover:bg-blue-400 rounded-lg font-semibold shadow-md transition duration-300 ease-in-out'
@@ -113,7 +113,7 @@ const Login = () => {
 								<img src={googleLogo} alt='Google' className='w-5 h-5 mr-2' />
 								Google Sign In
 							</a>
-						)}
+						)}*/}
 					</div>
 				</Form.Group>
 			</Form>

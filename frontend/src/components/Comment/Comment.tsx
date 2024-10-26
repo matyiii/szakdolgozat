@@ -33,7 +33,6 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 		DataService.threeD
 			.deleteComment(payload)
 			.then((res) => {
-				console.log(res);
 				deleteComment(res.data.comment_id);
 			})
 			.catch((err) => {
@@ -53,7 +52,6 @@ const Comment = ({ comment, deleteComment, handleCommentInputChange, editComment
 		DataService.threeD
 			.editComment(payload)
 			.then((res) => {
-				console.log(res);
 				editComment(res.data.new_comment);
 				setIsEditing(false);
 			})

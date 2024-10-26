@@ -24,7 +24,6 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 				is_liked: model?.is_liked as boolean,
 			})
 			.then((res) => {
-				console.log(res);
 				updateModel(res.data.model);
 			})
 			.catch((err) => {
@@ -88,7 +87,6 @@ const ThreeDModelDetails = ({ model, updateModel, onDownload }: Props) => {
 		DataService.admin
 			.deleteModel(payload)
 			.then((res) => {
-				console.log(res);
 				navigate(-1);
 				toast.success(res.data.message);
 			})

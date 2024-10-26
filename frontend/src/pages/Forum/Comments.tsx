@@ -48,7 +48,7 @@ const Comments = () => {
 	};
 
 	return (
-		<div className='w-full h-full bg-gray-100 p-6'>
+		<div className='w-full h-full p-6'>
 			<div className='max-w-screen-lg mx-auto'>
 				<div className='text-xl font-semibold text-gray-800 mb-4'>Comments</div>
 				<div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg'>
