@@ -100,10 +100,6 @@ class AuthController extends Controller
 
 		return response()->json([
 			'message' => 'Logged out successfully!',
-			'cors' => config('cors'),
-			'sanctum' => config('sanctum'),
-			'session' => config('session'),
-			'auth' => config('auth')
 		]);
 	}
 
