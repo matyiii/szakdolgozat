@@ -19,7 +19,7 @@ class AuthController extends Controller
 		$validator = Validator::make($request->all(), [
 			'username' => 'required|string|max:255|unique:App\Models\User,name',
 			'email' => 'required|email|unique:App\Models\User,email',
-			'password' => ['required', 'confirmed'/*, Password::min(8)->mixedCase()->numbers()*/],
+			'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
 			'is_privacy_ticked' => 'required|accepted',
 		]);
 
