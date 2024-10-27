@@ -23,6 +23,7 @@ class SiteController extends Controller
 
 		$filteredModels = ThreeDModel::with(['user', 'category', 'images', 'files'])
 			->where('name', 'LIKE', "%{$query}%")
+			->where('is_approved', 1)
 			->orWhereHas('category', function ($q) use ($query) {
 				$q->where('name', 'LIKE', "%{$query}%");
 			})
