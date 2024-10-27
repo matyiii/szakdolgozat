@@ -22,21 +22,24 @@ class SiteController extends Controller
 		$query = $request->q;
 
 		$filteredModels = ThreeDModel::with(['user', 'category', 'images', 'files'])
-			->where('name', 'LIKE', "%{$query}%")
 			->where('is_approved', 1)
-			->orWhereHas('category', function ($q) use ($query) {
-				$q->where('name', 'LIKE', "%{$query}%");
-			})
-			->orWhereHas('images', function ($q) use ($query) {
-				$q->where('name', 'LIKE', "%{$query}%");
-			})
-			->orWhereHas('files', function ($q) use ($query) {
-				$q->where('name', 'LIKE', "%{$query}%");
+			->where(function ($q) use ($query) {
+				$q->where('name', 'LIKE', "%{$query}%")
+					->orWhereHas('category', function ($q) use ($query) {
+						$q->where('name', 'LIKE', "%{$query}%");
+					})
+					->orWhereHas('images', function ($q) use ($query) {
+						$q->where('name', 'LIKE', "%{$query}%");
+					})
+					->orWhereHas('files', function ($q) use ($query) {
+						$q->where('name', 'LIKE', "%{$query}%");
+					});
 			})
 			->get();
 
 		return response()->json($filteredModels);
 	}
+
 
 	public function getUserById($user_id)
 	{
