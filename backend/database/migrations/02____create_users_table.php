@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->string('github_id')->nullable();
 			$table->timestamp('email_verified_at')->nullable();
 			$table->string('password')->nullable();
-			$table->foreignIdFor(Role::class)->constrained();
+			$table->foreignIdFor(Role::class)->default(2)->constrained();
 			$table->rememberToken();
 			$table->timestamps();
 		});
