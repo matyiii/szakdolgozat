@@ -53,11 +53,12 @@ class SiteController extends Controller
 			], 422);
 		}
 
-		$user = User::with([
-			'models',
-			'models.category',
-			'models.images',
-		])->find($user_id);
+		$user = User::select('id', 'name', 'email', 'created_at')
+			->with([
+				'models',
+				'models.category',
+				'models.images',
+			])->find($user_id);
 
 		if (!$user) {
 			return response()->json([

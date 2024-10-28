@@ -21,7 +21,7 @@ class ForumController extends Controller
 	public function getTopics(Request $request)
 	{
 		$topics = Topic::with([
-			'user',
+			'user:id,name',
 			'lastComment',
 		])
 			->where('forum_id', $request->forum_id)->get();

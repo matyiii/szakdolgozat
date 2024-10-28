@@ -54,7 +54,12 @@ class ThreeDModel extends BaseModel
 	/* Methods */
 	public static function getHighlightedModels()
 	{
-		return self::with(['user', 'category', 'images', 'files'])
+		return self::with([
+			'user:id,name',
+			'category',
+			'images',
+			'files',
+		])
 			->where(
 				[
 					['is_highlighted', 1],
@@ -74,7 +79,12 @@ class ThreeDModel extends BaseModel
 
 	public static function getDiscoveredModels()
 	{
-		return self::with(['user', 'category', 'images', 'files'])
+		return self::with([
+			'user:id,name',
+			'category',
+			'images',
+			'files',
+		])
 			->where('is_approved', 1)
 			->inRandomOrder()
 			->take(4)
@@ -83,7 +93,13 @@ class ThreeDModel extends BaseModel
 
 	public static function getById($id)
 	{
-		$model = self::with(['user', 'category', 'images', 'files', 'comments.user'])
+		$model = self::with(([
+			'user:id,name',
+			'category',
+			'images',
+			'files',
+			'comments.user',
+		]))
 			->find($id);
 
 		$user = Auth::user();

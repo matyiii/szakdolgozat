@@ -46,7 +46,7 @@ class Topic extends BaseModel
 			'comments' => function ($query) {
 				$query->orderBy('created_at', 'desc');
 			},
-			'comments.user',
+			'comments.user:id,name',
 		])
 			->where([
 				'id' => $topicId,

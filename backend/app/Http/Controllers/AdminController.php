@@ -11,7 +11,12 @@ class AdminController extends Controller
 {
 	public function getModelsInReview()
 	{
-		$models = ThreeDModel::with(['user', 'category', 'images', 'files'])
+		$models = ThreeDModel::with([
+			'user:id,name',
+			'category',
+			'images',
+			'files',
+		])
 			->whereNull('is_approved')
 			->orderByDesc('created_at')
 			->get();
@@ -68,7 +73,7 @@ class AdminController extends Controller
 		$modelId = $validated['model_id'];
 
 		$model = ThreeDModel::with(['files', 'images'])->find($modelId);
-		
+
 		$model->comments()->delete();
 		$model->likedByUsers()->detach();
 
