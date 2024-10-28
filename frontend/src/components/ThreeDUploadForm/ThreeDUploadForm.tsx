@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import { Button, ButtonToolbar, Form, SelectPicker, Uploader } from 'rsuite';
 import { FileType } from 'rsuite/esm/Uploader';
 import ApiError from '../ApiErrror/ApiError';
-import { useNavigate } from 'react-router-dom';
 
 type ThreeDUploadFormType = {
 	model_name: string;
@@ -15,9 +14,6 @@ type ThreeDUploadFormType = {
 };
 
 const ThreeDUploadForm = () => {
-	/* Hooks */
-	const navigate = useNavigate();
-
 	/* Selectors */
 	const categories = useAppSelector(selectCategories);
 
@@ -31,21 +27,17 @@ const ThreeDUploadForm = () => {
 	/* Functions */
 	const handleFormChange = (value: any, e: any) => {
 		const { name } = e.currentTarget;
-		setForm((prevState: ThreeDUploadFormType) => {
-			return {
-				...prevState,
-				[name]: value,
-			};
-		});
+		setForm((prevState: ThreeDUploadFormType) => ({
+			...prevState,
+			[name]: value,
+		}));
 	};
 
 	const handleFileUpload = (newFiles: FileType[]) => {
-		setForm((prevState: any) => {
-			return {
-				...prevState,
-				files: newFiles,
-			};
-		});
+		setForm((prevState: ThreeDUploadFormType) => ({
+			...prevState,
+			files: newFiles,
+		}));
 	};
 
 	const handleSubmit = () => {
@@ -66,16 +58,23 @@ const ThreeDUploadForm = () => {
 		DataService.threeD
 			.upload(formData)
 			.then((res) => {
-				const { message, model_id } = res.data;
+				const { message } = res.data;
 				toast.success(message, { duration: 3000 });
-				//navigate(`/models/${model_id}`);
+				resetForm();
 			})
 			.catch((err) => {
-				console.log(err);
 				toast.custom(<ApiError message={err.response.data} />, {
 					duration: 5000,
 				});
 			});
+	};
+
+	const resetForm = () => {
+		setForm({
+			model_name: '',
+			category_id: null,
+			files: [],
+		});
 	};
 
 	return (
@@ -94,17 +93,16 @@ const ThreeDUploadForm = () => {
 							label: category.name,
 							value: category.id,
 						}))}
+						value={form.category_id}
 						onSelect={(_, item) => {
-							setForm((prevState: ThreeDUploadFormType) => {
-								return {
-									...prevState,
-									category_id: item.value as number,
-								};
-							});
+							setForm((prevState: ThreeDUploadFormType) => ({
+								...prevState,
+								category_id: item.value as number,
+							}));
 						}}
 					/>
 				</Form.Group>
-				<Uploader draggable multiple action='' autoUpload={false} name='files' onChange={handleFileUpload}>
+				<Uploader draggable multiple action='' autoUpload={false} name='files' fileList={form.files} onChange={handleFileUpload}>
 					<div className='flex items-center justify-center'>
 						<span>Click or Drag files to this area to upload</span>
 					</div>
