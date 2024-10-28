@@ -20,13 +20,42 @@ class ThreeDController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'model_name' => 'required|string',
-			'category_id' => 'required|exists:App\Models\Category,id',
+			'category_id' => 'required|numeric|exists:App\Models\Category,id',
 			'is_highlighted' => 'sometimes|boolean',
-			'files' => 'required|array',
+			'files' => 'required|array|min:1',
 			'files.*.blobFile' => 'required|file',
 			'files.*.name' => 'required|string',
 			'files.*.status' => 'required|string|in:inited,processing,completed,failed',
 		]);
+
+		$hasStlFile = false;
+		$hasImageFile = false;
+
+		foreach ($request->file('files') as $file) {
+			$extension = strtolower($file['blobFile']->getClientOriginalExtension());
+
+			if ($extension === 'stl') {
+				$hasStlFile = true;
+			} elseif (in_array($extension, ['jpeg', 'jpg', 'png'])) {
+				$hasImageFile = true;
+			}
+
+			if ($hasStlFile && $hasImageFile) {
+				break;
+			}
+		}
+
+		if (!$hasStlFile) {
+			return response()->json([
+				'message' => 'At least one STL file is required for upload.'
+			], 422);
+		}
+
+		if (!$hasImageFile) {
+			return response()->json([
+				'message' => 'At least one image file (jpeg, jpg, png) is required for upload.'
+			], 422);
+		}
 
 		if ($validator->fails()) {
 			return response()->json([
@@ -46,27 +75,29 @@ class ThreeDController extends Controller
 
 		foreach ($request->file('files') as $file) {
 			$blobFile = $file['blobFile'];
-			$extension = $blobFile->getClientOriginalExtension();
+			$extension = strtolower($blobFile->getClientOriginalExtension());
 			$filename = $blobFile->getClientOriginalName();
 
-			if (in_array($extension, ['stl'])) {
+			if ($extension === 'stl') {
 				$path = $blobFile->storeAs('uploads/models', $filename, 'public');
-
 				ThreeDFile::create([
 					'three_d_model_id' => $threeDModel->id,
 					'name' => $filename,
 					'path' => $path,
 					'extension' => $extension,
 				]);
-			} elseif (in_array($extension, ['jpeg', 'jpg', 'png', 'PNG'])) {
+			} elseif (in_array($extension, ['jpeg', 'jpg', 'png'])) {
 				$path = $blobFile->storeAs('uploads/images', $filename, 'public');
-
 				ThreeDImage::create([
 					'three_d_model_id' => $threeDModel->id,
 					'name' => $filename,
 					'path' => $path,
 					'extension' => $extension,
 				]);
+			} else {
+				return response()->json([
+					'message' => "Unsupported file type: $extension"
+				], 422);
 			}
 		}
 
@@ -75,7 +106,6 @@ class ThreeDController extends Controller
 			'model_id' => $threeDModel->id,
 		], 200);
 	}
-
 
 	public function getHighlightedModels()
 	{
@@ -340,7 +370,10 @@ class ThreeDController extends Controller
 				break;
 		}
 
-		$models = $query->get()->take(4);
+		$models = $query
+			->where('is_approved', 1)
+			->get()
+			->take(4);
 
 		return response()->json($models);
 	}
