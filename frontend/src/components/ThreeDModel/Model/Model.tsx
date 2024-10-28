@@ -32,9 +32,11 @@ const Model = ({ model, updateModel, onDownload }: Props) => {
 			{model && (
 				<div className='flex flex-col md:flex-row bg-white shadow-sm rounded-lg'>
 					<div className='w-full md:w-3/4 bg-gray-50 p-4 rounded-lg'>
-						<div className='h-96 bg-gray-200 rounded-lg'>
-							<STLViewer fileId={model?.files[0].id} />
-						</div>
+						{model.files.length > 0 && (
+							<div className='h-96 bg-gray-200 rounded-lg'>
+								<STLViewer fileId={model?.files[0].id} />
+							</div>
+						)}
 
 						<div className='mt-4'>
 							<Carousel className='h-full' autoplay={false} placement='bottom'>
