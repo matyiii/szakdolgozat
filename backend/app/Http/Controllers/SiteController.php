@@ -55,7 +55,9 @@ class SiteController extends Controller
 
 		$user = User::select('id', 'name', 'email', 'created_at')
 			->with([
-				'models',
+				'models' => function ($query) {
+					$query->where('is_approved', 1);
+				},
 				'models.category',
 				'models.images',
 			])->find($user_id);
