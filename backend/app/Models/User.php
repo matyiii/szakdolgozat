@@ -34,6 +34,8 @@ class User extends Authenticatable
 	protected $hidden = [
 		'password',
 		'remember_token',
+		'google_id',
+		'github_id'
 	];
 
 	/**
@@ -67,7 +69,8 @@ class User extends Authenticatable
 	/* Functions */
 	public static function getDiscoveredUsers()
 	{
-		return self::withCount('models')
+		return self::select(['id', 'name'])
+			->withCount('models')
 			->inRandomOrder()
 			->take(4)
 			->get();
