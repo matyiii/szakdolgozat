@@ -66,6 +66,7 @@ class ThreeDModel extends BaseModel
 					['is_approved', 1],
 				]
 			)
+			->take(4)
 			->get();
 	}
 

@@ -69,7 +69,7 @@ class User extends Authenticatable
 	/* Functions */
 	public static function getDiscoveredUsers()
 	{
-		return self::select(['id', 'name'])
+		return self::select(['id', 'name', 'created_at'])
 			->withCount('models')
 			->inRandomOrder()
 			->take(4)
